@@ -1,0 +1,70 @@
+{
+  "parent": "block/block",
+  "textures": {
+    "mesh": "divinature:block/infuser_mesh",
+    "particle": "divinature:block/infuser_mesh"
+  },
+  "elements": [
+    {
+      "__comment": "mesh",
+      "from": [1.5, 5, 1.5],
+      "to": [14.5, 6, 14.5],
+      "faces": {
+        "north": {"uv": [0, 0, 13, 1], "texture": "#mesh"},
+        "east": {"uv": [0, 0, 13, 1], "texture": "#mesh"},
+        "south": {"uv": [0, 0, 13, 1], "texture": "#mesh"},
+        "west": {"uv": [0, 0, 13, 1], "texture": "#mesh"},
+        "up": {"uv": [0, 0, 13, 13], "texture": "#mesh"},
+        "down": {"uv": [0, 0, 13, 13], "texture": "#mesh"}
+      }
+    },
+    {
+      "__comment": "legNW",
+      "from": [1, 0, 1],
+      "to": [3, 8, 3],
+      "faces": {
+        "north": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "east": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "south": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "west": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "up": {"uv": [12, 14, 14, 16], "texture": "#mesh"}
+      }
+    },
+    {
+      "__comment": "legSW",
+      "from": [1, 0, 13],
+      "to": [3, 8, 15],
+      "faces": {
+        "north": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "east": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "south": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "west": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "up": {"uv": [12, 14, 14, 16], "texture": "#mesh"}
+      }
+    },
+    {
+      "__comment": "legSE",
+      "from": [13, 0, 13],
+      "to": [15, 8, 15],
+      "faces": {
+        "north": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "east": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "south": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "west": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "up": {"uv": [12, 14, 14, 16], "texture": "#mesh"}
+      }
+    },
+    {
+      "__comment": "legNE",
+      "from": [13, 0, 1],
+      "to": [15, 8, 3],
+      "faces": {
+        "north": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "east": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "south": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "west": {"uv": [14, 4, 16, 12], "texture": "#mesh"},
+        "up": {"uv": [12, 14, 14, 16], "texture": "#mesh"}
+      }
+    }
+  ]
+}

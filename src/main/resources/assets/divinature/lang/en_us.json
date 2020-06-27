@@ -1,0 +1,19 @@
+{
+    "itemGroup.divinature": "Divinature",
+
+    "item.divinature.burdock_seeds": "Burdock Seeds",
+    "item.divinature.burdock_root": "Burdock Root",
+    "item.divinature.empty_pouch": "Empty Pouch",
+    "item.divinature.filled_pouch": "Filled Pouch",
+
+    "block.divinature.blackbell": "Blackbell",
+
+    "block.divinature.elm_planks": "Elm Planks",
+    "block.divinature.elm_log": "Elm Log",
+    "block.divinature.elm_leaves": "Elm Leaves",
+
+    "block.divinature.mortar": "Mortar and Pestle",
+    "block.divinature.infuser": "Infuser",
+
+    "pouch.divinature.contains": "Contains:"
+}

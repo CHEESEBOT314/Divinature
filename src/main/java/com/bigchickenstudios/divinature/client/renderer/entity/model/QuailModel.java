@@ -1,9 +1,12 @@
-// Made with Blockbench 3.5.2
-// Exported for Minecraft version 1.15
-// Paste this class into your mod and generate all required imports
+package com.bigchickenstudios.divinature.client.renderer.entity.model;
 
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.renderer.entity.model.EntityModel;
+import net.minecraft.client.renderer.model.ModelRenderer;
+import net.minecraft.entity.Entity;
 
-public class custom_model extends EntityModel<Entity> {
+public class QuailModel extends EntityModel<Entity> {
 	private final ModelRenderer body;
 	private final ModelRenderer legR;
 	private final ModelRenderer legL;
@@ -12,7 +15,7 @@ public class custom_model extends EntityModel<Entity> {
 	private final ModelRenderer wingR;
 	private final ModelRenderer wingL;
 
-	public custom_model() {
+	public QuailModel() {
 		textureWidth = 32;
 		textureHeight = 16;
 

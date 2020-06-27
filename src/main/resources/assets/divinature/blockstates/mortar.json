@@ -1,0 +1,9 @@
+{
+    "variants": {
+        "fill=0": { "model": "divinature:block/mortar"},
+        "fill=1": { "model": "divinature:block/mortar_filled1"},
+        "fill=2": { "model": "divinature:block/mortar_filled2"},
+        "fill=3": { "model": "divinature:block/mortar_filled3"},
+        "fill=4": { "model": "divinature:block/mortar_filled4"}
+    }
+}

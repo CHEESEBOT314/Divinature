@@ -1,17 +1,15 @@
 {
-	"credit": "Made with Blockbench",
 	"textures": {
-		"1": "block/elm_log",
-		"2": "Blocks/analyzer_glass",
+		"1": "divinature:block/elm_log",
+		"2": "divinature:block/analyzer_glass",
 		"3": "block/quartz",
-		"4": "Blocks/analyzer_hay",
-		"particle": "Blocks/analyzer_hay"
+		"4": "divinature:block/analyzer_hay",
+		"particle": "divinature:block/analyzer_hay"
 	},
 	"elements": [
 		{
 			"from": [1, 0, 1],
 			"to": [15, 4, 15],
-			"rotation": {"angle": 0, "axis": "y", "origin": [9, 8, 9]},
 			"faces": {
 				"north": {"uv": [0, 0, 14, 4], "texture": "#3"},
 				"east": {"uv": [0, 0, 14, 4], "texture": "#3"},
@@ -24,7 +22,6 @@
 		{
 			"from": [1.5, 4, 12],
 			"to": [2.5, 15, 13],
-			"rotation": {"angle": 0, "axis": "y", "origin": [9, 12, 20]},
 			"faces": {
 				"north": {"uv": [7, 0, 8, 11], "texture": "#1"},
 				"east": {"uv": [2, 0, 3, 11], "texture": "#1"},
@@ -37,7 +34,6 @@
 		{
 			"from": [13.5, 4, 12],
 			"to": [14.5, 15, 13],
-			"rotation": {"angle": 0, "axis": "y", "origin": [22, 12, 20]},
 			"faces": {
 				"north": {"uv": [7, 0, 8, 11], "texture": "#1"},
 				"east": {"uv": [2, 0, 3, 11], "texture": "#1"},

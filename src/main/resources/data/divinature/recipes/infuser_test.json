@@ -1,0 +1,15 @@
+{
+    "type": "divinature:infuser",
+    "input": {
+        "item": "minecraft:iron_ingot"
+    },
+    "pouch": [
+        {
+            "item": "divinature:burdock_root"
+        }
+    ],
+    "output": {
+        "item": "minecraft:gold_ingot"
+    },
+    "time": 100
+}

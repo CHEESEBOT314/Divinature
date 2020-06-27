@@ -1,0 +1,7 @@
+{
+    "variants": {
+        "axis=y":  { "model": "divinature:block/elm_log" },
+        "axis=z":   { "model": "divinature:block/elm_log", "x": 90 },
+        "axis=x":   { "model": "divinature:block/elm_log", "x": 90, "y": 90 }
+    }
+}

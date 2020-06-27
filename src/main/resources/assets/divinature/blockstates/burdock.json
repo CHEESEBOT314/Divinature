@@ -1,0 +1,12 @@
+{
+    "variants": {
+        "age=0": { "model": "divinature:block/burdock_stage0" },
+        "age=1": { "model": "divinature:block/burdock_stage0" },
+        "age=2": { "model": "divinature:block/burdock_stage1" },
+        "age=3": { "model": "divinature:block/burdock_stage1" },
+        "age=4": { "model": "divinature:block/burdock_stage2" },
+        "age=5": { "model": "divinature:block/burdock_stage2" },
+        "age=6": { "model": "divinature:block/burdock_stage2" },
+        "age=7": { "model": "divinature:block/burdock_stage3" }
+    }
+}
