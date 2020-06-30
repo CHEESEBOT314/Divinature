@@ -1,6 +1,8 @@
 package com.bigchickenstudios.divinature.client.renderer.entity.model;
 
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.matrix.MatrixStack;
+import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -16,9 +18,9 @@ public abstract class NatureArmorModel extends BipedModel<LivingEntity> {
     }
 
     @Override
-    public void setRotationAngles(LivingEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        super.setRotationAngles(entity, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+    public void render(@Nonnull MatrixStack s, @Nonnull IVertexBuilder v, int a, int b, float c, float d, float e, float f) {
         this.updateRotations();
+        super.render(s, v, a, b, c, d, e, f);
     }
 
     protected abstract void updateRotations();

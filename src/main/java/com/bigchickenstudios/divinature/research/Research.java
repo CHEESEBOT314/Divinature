@@ -5,7 +5,7 @@ import net.minecraftforge.registries.ForgeRegistryEntry;
 public class Research extends ForgeRegistryEntry<Research> {
 
     private Research(Builder builder) {
-
+        
     }
 
     public static class Builder {
