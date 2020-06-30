@@ -6,10 +6,12 @@ import com.bigchickenstudios.divinature.item.ModItems;
 import com.bigchickenstudios.divinature.item.crafting.ModRecipeSerializers;
 import com.bigchickenstudios.divinature.tileentity.ModTileEntityTypes;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.server.FMLServerAboutToStartEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,10 +36,15 @@ public class Divinature  {
             bus.addListener(Setup::blockColours);
             bus.addListener(Setup::itemColours);
         });
+
+        MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStart);
     }
 
     private void clientSetup(FMLClientSetupEvent event) {
         Setup.go();
+    }
+
+    private void onServerAboutToStart(FMLServerAboutToStartEvent event) {
     }
 
 

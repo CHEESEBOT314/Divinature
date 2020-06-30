@@ -2,6 +2,7 @@ package com.bigchickenstudios.divinature.client.renderer.overlay;
 
 import com.bigchickenstudios.divinature.Constants;
 import com.bigchickenstudios.divinature.tileentity.MortarTileEntity;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;
 import net.minecraft.item.ItemStack;
@@ -13,15 +14,16 @@ public class MortarOverlayRenderer extends OverlayRenderer<MortarTileEntity> {
     private static final ResourceLocation TEXTURE = Constants.rl("textures/gui/container/mortar.png");
 
     @Override
-    protected void render(MortarTileEntity mortarTileEntity, Minecraft mc, float partialTick) {
+    protected void render(MortarTileEntity mortarTileEntity, MatrixStack matrixStack, Minecraft mc, float partialTick) {
         NonNullList<ItemStack> stacks = mortarTileEntity.getStacks();
         if (!stacks.isEmpty()) {
             int x = mc.getMainWindow().getScaledWidth() / 2 - 64;
             int y = mc.getMainWindow().getScaledHeight() / 2 - 64;
 
+
             mc.getTextureManager().bindTexture(TEXTURE);
-            AbstractGui.blit(x, y, 0, 0, 54, 54, 64, 64);
-            AbstractGui.blit(x + 47, y + 47, 0, 55, 9, 9, 64, 64);
+            AbstractGui.func_238463_a_(matrixStack, x, y, 0, 0, 54, 54, 64, 64);
+            AbstractGui.func_238463_a_(matrixStack, x + 47, y + 47, 0, 55, 9, 9, 64, 64);
             for (int i = 0; i < stacks.size(); i++) {
                 ItemStack stack = stacks.get(i);
                 int x1 = x + (i % 3) * 16 + 3;

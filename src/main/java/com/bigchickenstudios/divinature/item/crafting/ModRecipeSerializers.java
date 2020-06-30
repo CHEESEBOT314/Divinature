@@ -14,7 +14,7 @@ public final class ModRecipeSerializers {
     public static final RegistryObject<InfuserRecipe.Serializer> INFUSER;
 
     static {
-        RECIPE_SERIALIZER_DEFERRED_REGISTER = new DeferredRegister<>(ForgeRegistries.RECIPE_SERIALIZERS, Constants.MODID);
+        RECIPE_SERIALIZER_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Constants.MODID);
 
         INFUSER = create("infuser", InfuserRecipe.Serializer::new);
     }

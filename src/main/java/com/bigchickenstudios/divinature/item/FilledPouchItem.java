@@ -28,9 +28,9 @@ public class FilledPouchItem extends Item {
             CompoundNBT nbt = stack.getOrCreateTag();
             NonNullList<ItemStack> stacks = readContents(nbt);
             if (!stacks.isEmpty()) {
-                tooltip.add(new TranslationTextComponent("pouch.divinature.contains").applyTextStyle(TextFormatting.GOLD));
+                tooltip.add(new TranslationTextComponent("pouch.divinature.contains").func_240699_a_(TextFormatting.GOLD));
                 for (ItemStack s : stacks) {
-                    tooltip.add(new StringTextComponent("- ").applyTextStyle(TextFormatting.DARK_AQUA).appendSibling(s.getItem().getDisplayName(s)));
+                    tooltip.add(new StringTextComponent("- ").func_240699_a_(TextFormatting.DARK_AQUA).func_230529_a_(s.getItem().getDisplayName(s)));
                 }
             }
         }

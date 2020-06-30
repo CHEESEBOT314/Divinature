@@ -19,8 +19,8 @@ public final class ModBlocks {
     public static final RegistryObject<BurdockBlock> BURDOCK;
 
     public static final RegistryObject<Block> ELM_PLANKS;
-    public static final RegistryObject<LogBlock> STRIPPED_ELM_LOG;
-    public static final RegistryObject<LogBlock> ELM_LOG;
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_ELM_LOG;
+    public static final RegistryObject<RotatedPillarBlock> ELM_LOG;
     public static final RegistryObject<RotatedPillarBlock> STRIPPED_ELM_WOOD;
     public static final RegistryObject<RotatedPillarBlock> ELM_WOOD;
     public static final RegistryObject<LeavesBlock> ELM_LEAVES;
@@ -29,15 +29,15 @@ public final class ModBlocks {
     public static final RegistryObject<InfuserBlock> INFUSER;
 
     static {
-        BLOCK_DEFERRED_REGISTER = new DeferredRegister<>(ForgeRegistries.BLOCKS, Constants.MODID);
+        BLOCK_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MODID);
 
         BLACKBELL = create("blackbell", (p) -> new FlowerBlock(Effects.WEAKNESS, 9, p), Material.PLANTS, (p) -> p.doesNotBlockMovement().hardnessAndResistance(0.0F).sound(SoundType.PLANT));
 
         BURDOCK = create("burdock", BurdockBlock::new, Material.PLANTS, (p) -> p.doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.CROP));
 
         ELM_PLANKS = create("elm_planks", Material.WOOD, (p) -> p.hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD));
-        STRIPPED_ELM_LOG = create("stripped_elm_log", (p) -> new LogBlock(MaterialColor.WOOD, p), Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
-        ELM_LOG = create("elm_log", (p) -> new StrippableLogBlock(MaterialColor.WOOD, p, STRIPPED_ELM_LOG), Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+        STRIPPED_ELM_LOG = create("stripped_elm_log", RotatedPillarBlock::new, Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+        ELM_LOG = create("elm_log", (p) -> new StrippableRotatedPillarBlock(p, STRIPPED_ELM_LOG), Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
         STRIPPED_ELM_WOOD = create("stripped_elm_wood", RotatedPillarBlock::new, Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
         ELM_WOOD = create("elm_wood", (p) -> new StrippableRotatedPillarBlock(p, STRIPPED_ELM_WOOD), Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
         ELM_LEAVES = create("elm_leaves", LeavesBlock::new, Material.LEAVES, (p) -> p.hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid());

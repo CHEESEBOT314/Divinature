@@ -7,9 +7,9 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.Vector3f;
+import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.model.Material;
+import net.minecraft.client.renderer.model.RenderMaterial;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 public class MortarTileEntityRenderer extends TileEntityRenderer<MortarTileEntity> {
 
-    public static final Material TEXTURE = new Material(PlayerContainer.LOCATION_BLOCKS_TEXTURE, Constants.rl("entity/pestle"));
+    public static final RenderMaterial TEXTURE = new RenderMaterial(PlayerContainer.LOCATION_BLOCKS_TEXTURE, Constants.rl("entity/pestle"));
 
     private final ItemRenderer itemRenderer;
 

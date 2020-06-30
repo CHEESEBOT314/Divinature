@@ -18,7 +18,7 @@ public final class ModTileEntityTypes {
     public static final RegistryObject<TileEntityType<InfuserTileEntity>> INFUSER;
 
     static {
-        TILE_ENTITY_TYPE_DEFERRED_REGISTER = new DeferredRegister<>(ForgeRegistries.TILE_ENTITIES, Constants.MODID);
+        TILE_ENTITY_TYPE_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Constants.MODID);
 
         MORTAR = create("mortar", MortarTileEntity::new, ModBlocks.MORTAR);
         INFUSER = create("infuser", InfuserTileEntity::new, ModBlocks.INFUSER);

@@ -7,7 +7,8 @@ import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.Attribute;
+import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ArmorItem;
@@ -47,8 +48,8 @@ public class NatureArmorItem extends ArmorItem {
     }
 
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
-        Multimap<String, AttributeModifier> map = HashMultimap.create();
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlotType slot, ItemStack stack) {
+        Multimap<Attribute, AttributeModifier> map = HashMultimap.create();
         if (slot == this.slot) {
             int a = BASE_ARMOR[slot.getIndex()];
             int t = 0;
@@ -58,8 +59,8 @@ public class NatureArmorItem extends ArmorItem {
                 a += armor.getInt("Armor");
                 t += armor.getInt("Toughness");
             }
-            map.put(SharedMonsterAttributes.ARMOR.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", a, AttributeModifier.Operation.ADDITION));
-            map.put(SharedMonsterAttributes.ARMOR_TOUGHNESS.getName(), new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", t, AttributeModifier.Operation.ADDITION));
+            map.put(Attributes.field_233826_i_, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", a, AttributeModifier.Operation.ADDITION));
+            map.put(Attributes.field_233827_j_, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", t, AttributeModifier.Operation.ADDITION));
         }
         return map;
     }
@@ -106,6 +107,11 @@ public class NatureArmorItem extends ArmorItem {
         @Override
         public float getToughness() {
             return 0;
+        }
+
+        @Override
+        public float func_230304_f_() {
+            return 0.0F;
         }
     };
 }

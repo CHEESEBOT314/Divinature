@@ -1,6 +1,7 @@
 package com.bigchickenstudios.divinature.client.renderer.overlay;
 
 import com.google.common.collect.Maps;
+import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -16,7 +17,7 @@ import java.util.function.Supplier;
 @Mod.EventBusSubscriber
 public abstract class OverlayRenderer<T extends TileEntity> {
 
-    protected abstract void render(T t, Minecraft mc, float partialTick);
+    protected abstract void render(T t, MatrixStack matrixStack,  Minecraft mc, float partialTick);
 
     protected void renderItem(Minecraft mc, ItemStack stack, int x, int y) {
         if (!stack.isEmpty()) {
@@ -38,16 +39,16 @@ public abstract class OverlayRenderer<T extends TileEntity> {
             if (mc.objectMouseOver instanceof BlockRayTraceResult) {
                 TileEntity te = mc.world.getTileEntity(((BlockRayTraceResult)mc.objectMouseOver).getPos());
                 if (te != null) {
-                    renderOverlay(te, mc, mc.getRenderPartialTicks());
+                    renderOverlay(te, event.getMatrixStack(), mc, mc.getRenderPartialTicks());
                 }
             }
         }
     }
 
-    private static <T extends TileEntity> void renderOverlay(T t, Minecraft mc, float partialTick) {
+    private static <T extends TileEntity> void renderOverlay(T t, MatrixStack matrixStack,  Minecraft mc, float partialTick) {
         OverlayRenderer<T> renderer = (OverlayRenderer<T>)RENDERERS.get(t.getType());
         if (renderer != null) {
-            renderer.render(t, mc, partialTick);
+            renderer.render(t, matrixStack, mc, partialTick);
         }
     }
 }

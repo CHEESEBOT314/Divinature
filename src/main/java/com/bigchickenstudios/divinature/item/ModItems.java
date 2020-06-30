@@ -30,7 +30,7 @@ public final class ModItems {
     private static final BiFunction<Item.Properties, Boolean, Item.Properties> GROUP_FUNC;
 
     static {
-        ITEM_DEFERRED_REGISTER = new DeferredRegister<>(ForgeRegistries.ITEMS, Constants.MODID);
+        ITEM_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MODID);
 
         create(ModBlocks.BLACKBELL, true);
 
