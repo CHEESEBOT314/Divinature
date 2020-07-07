@@ -25,6 +25,13 @@ public final class ModBlocks {
     public static final RegistryObject<RotatedPillarBlock> ELM_WOOD;
     public static final RegistryObject<LeavesBlock> ELM_LEAVES;
 
+    public static final RegistryObject<Block> MAGNOLIA_PLANKS;
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_MAGNOLIA_LOG;
+    public static final RegistryObject<RotatedPillarBlock> MAGNOLIA_LOG;
+    public static final RegistryObject<RotatedPillarBlock> STRIPPED_MAGNOLIA_WOOD;
+    public static final RegistryObject<RotatedPillarBlock> MAGNOLIA_WOOD;
+    public static final RegistryObject<LeavesBlock> MAGNOLIA_LEAVES;
+
     public static final RegistryObject<MortarBlock> MORTAR;
     public static final RegistryObject<InfuserBlock> INFUSER;
 
@@ -41,6 +48,13 @@ public final class ModBlocks {
         STRIPPED_ELM_WOOD = create("stripped_elm_wood", RotatedPillarBlock::new, Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
         ELM_WOOD = create("elm_wood", (p) -> new StrippableRotatedPillarBlock(p, STRIPPED_ELM_WOOD), Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
         ELM_LEAVES = create("elm_leaves", LeavesBlock::new, Material.LEAVES, (p) -> p.hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid());
+
+        MAGNOLIA_PLANKS = create("magnolia_planks", Material.WOOD, (p) -> p.hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD));
+        STRIPPED_MAGNOLIA_LOG = create("stripped_magnolia_log", RotatedPillarBlock::new, Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+        MAGNOLIA_LOG = create("magnolia_log", (p) -> new StrippableRotatedPillarBlock(p, STRIPPED_MAGNOLIA_LOG), Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+        STRIPPED_MAGNOLIA_WOOD = create("stripped_magnolia_wood", RotatedPillarBlock::new, Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+        MAGNOLIA_WOOD = create("magnolia_wood", (p) -> new StrippableRotatedPillarBlock(p, STRIPPED_MAGNOLIA_WOOD), Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
+        MAGNOLIA_LEAVES = create("magnolia_leaves", LeavesBlock::new, Material.LEAVES, (p) -> p.hardnessAndResistance(0.2F).tickRandomly().sound(SoundType.PLANT).notSolid());
 
         MORTAR = create("mortar", MortarBlock::new, Material.ROCK);
         INFUSER = create("infuser", InfuserBlock::new, Material.ROCK);

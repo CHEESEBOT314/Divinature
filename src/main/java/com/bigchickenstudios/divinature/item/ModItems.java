@@ -41,6 +41,13 @@ public final class ModItems {
         create(ModBlocks.STRIPPED_ELM_WOOD, true);
         create(ModBlocks.ELM_LEAVES, true);
 
+        create(ModBlocks.MAGNOLIA_PLANKS, true);
+        create(ModBlocks.MAGNOLIA_LOG, true);
+        create(ModBlocks.STRIPPED_MAGNOLIA_LOG, true);
+        create(ModBlocks.MAGNOLIA_WOOD, true);
+        create(ModBlocks.STRIPPED_MAGNOLIA_WOOD, true);
+        create(ModBlocks.MAGNOLIA_LEAVES, true);
+
         create(ModBlocks.MORTAR, true);
         create(ModBlocks.INFUSER, true);
 

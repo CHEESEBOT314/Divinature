@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "end": "divinature:block/stripped_magnolia_log",
+        "side": "divinature:block/stripped_magnolia_log"
+    }
+}
