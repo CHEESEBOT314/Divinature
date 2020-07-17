@@ -3,7 +3,8 @@ package com.bigchickenstudios.divinature.tileentity;
 import com.bigchickenstudios.divinature.block.MortarBlock;
 import com.bigchickenstudios.divinature.item.FilledPouchItem;
 import com.bigchickenstudios.divinature.item.ModItems;
-import com.bigchickenstudios.divinature.item.crafting.AbstractPouchRecipe;
+import com.bigchickenstudios.divinature.item.crafting.IPouchRecipe;
+import com.bigchickenstudios.divinature.item.crafting.ModRecipeTypes;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -57,7 +58,7 @@ public class MortarTileEntity extends TileEntity implements ITickableTileEntity 
             else {
                 if (stack.isEmpty()) {
                     if (player.isSneaking()) {
-                        if (this.level < 4 && (this.level > 0 || AbstractPouchRecipe.isValidPouch(this.itemStacks, this.getWorld()))) {
+                        if (this.level < 4 && (this.level > 0 || ModRecipeTypes.isPouchValid(player, this.itemStacks))) {
                             this.grind();
                             success = true;
                         }
@@ -71,7 +72,7 @@ public class MortarTileEntity extends TileEntity implements ITickableTileEntity 
                     }
                 }
                 else if (this.level < 1) {
-                    if (this.itemStacks.size() < AbstractPouchRecipe.MAX_POUCH_SIZE) {
+                    if (this.itemStacks.size() < IPouchRecipe.MAX_POUCH_SIZE) {
                         this.itemStacks.add(stack.split(1));
                         success = true;
                     }
@@ -95,7 +96,7 @@ public class MortarTileEntity extends TileEntity implements ITickableTileEntity 
                 this.grindTime = 0;
 
                 if (!this.getWorld().isRemote()) {
-                    this.changeFillLevel(1);
+                    this.changeFillLevel(4);
                 }
             }
         }
@@ -185,7 +186,7 @@ public class MortarTileEntity extends TileEntity implements ITickableTileEntity 
 
         this.itemStacks.clear();
         ListNBT listNBT = compound.getList("Items", Constants.NBT.TAG_COMPOUND);
-        for (int i = 0; i < Math.min(listNBT.size(), AbstractPouchRecipe.MAX_POUCH_SIZE); i++) {
+        for (int i = 0; i < Math.min(listNBT.size(), IPouchRecipe.MAX_POUCH_SIZE); i++) {
             ItemStack stack = ItemStack.read(listNBT.getCompound(i));
             if (!stack.isEmpty()) {
                 this.itemStacks.add(i, stack);

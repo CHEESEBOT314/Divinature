@@ -1,6 +1,7 @@
 package com.bigchickenstudios.divinature.client;
 
 import com.bigchickenstudios.divinature.block.ModBlocks;
+import com.bigchickenstudios.divinature.client.multiplayer.ClientResearchManager;
 import com.bigchickenstudios.divinature.client.renderer.overlay.MortarOverlayRenderer;
 import com.bigchickenstudios.divinature.client.renderer.overlay.OverlayRenderer;
 import com.bigchickenstudios.divinature.client.renderer.tileentity.InfuserTileEntityRenderer;
@@ -12,23 +13,45 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.tileentity.TileEntityRenderer;
 import net.minecraft.client.renderer.tileentity.TileEntityRendererDispatcher;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.container.PlayerContainer;
 import net.minecraft.item.BlockItem;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.item.crafting.IRecipeType;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.FoliageColors;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 
+import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public final class Setup {
+public final class DivinatureClient {
 
-    public static void go() {
+    private static final ClientResearchManager RESEARCH_MANAGER = new ClientResearchManager(Minecraft.getInstance());
+
+    public static ClientResearchManager getResearchManager() {
+        return RESEARCH_MANAGER;
+    }
+
+    public static void registerListeners() {
+        IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
+        bus.addListener(DivinatureClient::init);
+        bus.addListener(DivinatureClient::preStitch);
+        bus.addListener(DivinatureClient::blockColours);
+        bus.addListener(DivinatureClient::itemColours);
+    }
+
+    private static void init(FMLClientSetupEvent event) {
+
         setRenderType(ModBlocks.BLACKBELL, RenderType.getCutout());
         setRenderType(ModBlocks.BURDOCK, RenderType.getCutout());
         setRenderType(ModBlocks.MORTAR, RenderType.getCutout());
@@ -52,23 +75,27 @@ public final class Setup {
         type.ifPresent((t) -> OverlayRenderer.bindOverlayRenderer(t, supplier));
     }
 
-    public static void preStitch(TextureStitchEvent.Pre event) {
+    private static void preStitch(TextureStitchEvent.Pre event) {
         if (event.getMap().getTextureLocation() == PlayerContainer.LOCATION_BLOCKS_TEXTURE) {
             event.addSprite(MortarTileEntityRenderer.TEXTURE.getTextureLocation());
         }
     }
 
-    public static void blockColours(ColorHandlerEvent.Block event) {
+    private static void blockColours(ColorHandlerEvent.Block event) {
         event.getBlockColors().register((state, lightReader, pos, i) ->
                         (lightReader != null && pos != null) ? BiomeColors.getFoliageColor(lightReader, pos) : FoliageColors.getDefault(),
                 ModBlocks.ELM_LEAVES.get());
     }
 
-    public static void itemColours(ColorHandlerEvent.Item event) {
+    private static void itemColours(ColorHandlerEvent.Item event) {
         event.getItemColors().register((stack, i) ->
             event.getBlockColors().getColor(((BlockItem)stack.getItem()).getBlock().getDefaultState(), null, null, i),
                 ModBlocks.ELM_LEAVES.get());
     }
 
-    private Setup() {}
+    public static <C extends IInventory, T extends IRecipe<C>> List<T> getRecipes(IRecipeType<T> type) {
+        return Minecraft.getInstance().world.getRecipeManager().func_241447_a_(type);
+    }
+
+    private DivinatureClient() {}
 }

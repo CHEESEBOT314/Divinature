@@ -1,0 +1,25 @@
+{
+    "parents": [],
+    "stages": [
+        {
+            "info": "Test Stage",
+            "tasks": [
+                {
+                    "info": "Test Task",
+                    "type": "divinature:item_crafted",
+                    "conditions": {
+                        "result": {
+                            "item": "minecraft:oak_planks"
+                        }
+                    }
+                }
+            ]
+        }
+    ],
+    "page": {
+        "info": "Introduction",
+        "icon": "divinature:mortar"
+    },
+    "info": "Test Research",
+    "icon": "minecraft:oak_planks"
+}

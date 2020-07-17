@@ -15,18 +15,30 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 
-public class InfuserRecipe extends AbstractPouchRecipe<InfuserRecipe.Inv> {
+public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements IPouchRecipe {
 
     private final Ingredient input;
+    private final NonNullList<Ingredient> pouch;
+
     private final ItemStack output;
 
     private final int time;
 
     private InfuserRecipe(ResourceLocation idIn, Ingredient inputIn, NonNullList<Ingredient> pouchIn, ItemStack outputIn, int timeIn) {
-        super(idIn, pouchIn);
+        super(idIn);
         this.input = inputIn;
+        this.pouch = pouchIn;
         this.output = outputIn;
         this.time = timeIn;
+    }
+
+    public Ingredient getInput() {
+        return this.input;
+    }
+
+    @Override
+    public NonNullList<Ingredient> getPouch() {
+        return this.pouch;
     }
 
     public int getTime() {
@@ -58,25 +70,30 @@ public class InfuserRecipe extends AbstractPouchRecipe<InfuserRecipe.Inv> {
     }
 
     @Override
-    public boolean matchesElse(@Nonnull Inv inv, @Nonnull World world) {
-        return this.input.test(inv.getInput());
+    public boolean matches(@Nonnull Inv inv, @Nonnull World worldIn) {
+        return this.input.test(inv.getInput()) && this.matchesPouch(inv.getPouch());
     }
 
-    public static class Inv extends AbstractPouchRecipe.PouchInv {
+    public static class Inv extends AbstractRecipe.FakeInv {
         private final ItemStack input;
+        private final NonNullList<ItemStack> pouch;
 
-        public Inv(ItemStack inputIn, NonNullList<ItemStack> pouchIn, boolean onlyPouchIn) {
-            super(pouchIn, onlyPouchIn);
+        private Inv(ItemStack inputIn, NonNullList<ItemStack> pouchIn) {
             this.input = inputIn;
+            this.pouch = pouchIn;
         }
 
-        public ItemStack getInput() {
+        private ItemStack getInput() {
             return this.input;
+        }
+
+        private NonNullList<ItemStack> getPouch() {
+            return this.pouch;
         }
     }
 
     public static Optional<InfuserRecipe> findMatch(ItemStack top, NonNullList<ItemStack> pouch, @Nullable World world) {
-        return world != null ? AbstractRecipe.findMatch(ModRecipeTypes.INFUSER, new Inv(top, pouch, false), world) : Optional.empty();
+        return world != null ? AbstractRecipe.findMatch(ModRecipeTypes.INFUSER, new Inv(top, pouch), world) : Optional.empty();
     }
 
     public static class Serializer extends ForgeRegistryEntry<IRecipeSerializer<?>> implements IRecipeSerializer<InfuserRecipe> {
@@ -85,7 +102,7 @@ public class InfuserRecipe extends AbstractPouchRecipe<InfuserRecipe.Inv> {
         @Override
         public InfuserRecipe read(@Nonnull ResourceLocation id, @Nonnull JsonObject json) {
             Ingredient input = Ingredient.deserialize(JSONUtils.isJsonArray(json, "input") ? JSONUtils.getJsonArray(json, "input") : JSONUtils.getJsonObject(json, "input"));
-            NonNullList<Ingredient> pouch = AbstractPouchRecipe.readPouch(JSONUtils.getJsonArray(json, "pouch"), "divinature:infuser");
+            NonNullList<Ingredient> pouch = IPouchRecipe.readPouch(JSONUtils.getJsonArray(json, "pouch"));
             ItemStack output = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "output"));
             return new InfuserRecipe(id, input, pouch, output, JSONUtils.getInt(json, "time"));
         }
@@ -94,7 +111,7 @@ public class InfuserRecipe extends AbstractPouchRecipe<InfuserRecipe.Inv> {
         @Override
         public InfuserRecipe read(@Nonnull ResourceLocation id, @Nonnull PacketBuffer buffer) {
             Ingredient input = Ingredient.read(buffer);
-            NonNullList<Ingredient> pouch = AbstractPouchRecipe.readPouch(buffer);
+            NonNullList<Ingredient> pouch = IPouchRecipe.readPouch(buffer);
             ItemStack output = buffer.readItemStack();
             int time = buffer.readVarInt();
             return new InfuserRecipe(id, input, pouch, output, time);
@@ -103,7 +120,7 @@ public class InfuserRecipe extends AbstractPouchRecipe<InfuserRecipe.Inv> {
         @Override
         public void write(@Nonnull PacketBuffer buffer, @Nonnull InfuserRecipe recipe) {
             recipe.input.write(buffer);
-            recipe.writePouch(buffer);
+            IPouchRecipe.writePouch(recipe.getPouch(), buffer);
             buffer.writeItemStack(recipe.output);
             buffer.writeVarInt(recipe.time);
         }

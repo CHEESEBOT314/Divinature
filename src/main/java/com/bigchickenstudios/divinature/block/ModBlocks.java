@@ -5,6 +5,7 @@ import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.material.MaterialColor;
 import net.minecraft.potion.Effects;
+import net.minecraftforge.common.ToolType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -42,7 +43,7 @@ public final class ModBlocks {
 
         BURDOCK = create("burdock", BurdockBlock::new, Material.PLANTS, (p) -> p.doesNotBlockMovement().tickRandomly().hardnessAndResistance(0.0F).sound(SoundType.CROP));
 
-        ELM_PLANKS = create("elm_planks", Material.WOOD, (p) -> p.hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD));
+        ELM_PLANKS = create("elm_planks", Material.WOOD, (p) -> p.hardnessAndResistance(2.0F, 3.0F).sound(SoundType.WOOD).harvestTool(ToolType.AXE));
         STRIPPED_ELM_LOG = create("stripped_elm_log", RotatedPillarBlock::new, Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
         ELM_LOG = create("elm_log", (p) -> new StrippableRotatedPillarBlock(p, STRIPPED_ELM_LOG), Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));
         STRIPPED_ELM_WOOD = create("stripped_elm_wood", RotatedPillarBlock::new, Material.WOOD, (p) -> p.hardnessAndResistance(2.0F).sound(SoundType.WOOD));

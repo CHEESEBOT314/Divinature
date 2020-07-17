@@ -15,5 +15,9 @@
     "block.divinature.mortar": "Mortar and Pestle",
     "block.divinature.infuser": "Infuser",
 
-    "pouch.divinature.contains": "Contains:"
+    "pouch.divinature.contains": "Contains:",
+
+    "divinature.research.complete": "Research Complete!",
+
+    "jei.tooltip.divinature.ticks": "Ticks: %d"
 }

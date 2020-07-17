@@ -30,6 +30,11 @@ public abstract class AbstractRecipe<T extends IInventory> implements IRecipe<T>
         return true;
     }
 
+    @Override
+    public boolean isDynamic() {
+        return true;
+    }
+
     public static class FakeInv implements IInventory {
 
         @Override

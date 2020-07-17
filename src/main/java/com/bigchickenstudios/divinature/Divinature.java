@@ -1,9 +1,12 @@
 package com.bigchickenstudios.divinature;
 
 import com.bigchickenstudios.divinature.block.ModBlocks;
-import com.bigchickenstudios.divinature.client.Setup;
+import com.bigchickenstudios.divinature.client.DivinatureClient;
 import com.bigchickenstudios.divinature.item.ModItems;
 import com.bigchickenstudios.divinature.item.crafting.ModRecipeSerializers;
+import com.bigchickenstudios.divinature.network.DivinaturePacketHandler;
+import com.bigchickenstudios.divinature.research.PlayerResearch;
+import com.bigchickenstudios.divinature.research.ResearchManager;
 import com.bigchickenstudios.divinature.tileentity.ModTileEntityTypes;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -23,28 +26,23 @@ public class Divinature  {
 
     public Divinature() {
         IEventBus bus = FMLJavaModLoadingContext.get().getModEventBus();
-        bus.addListener(this::clientSetup);
 
         ModBlocks.init(bus);
         ModItems.init(bus);
-
         ModRecipeSerializers.init(bus);
         ModTileEntityTypes.init(bus);
 
-        DistExecutor.runWhenOn(Dist.CLIENT, () -> () -> {
-            bus.addListener(Setup::preStitch);
-            bus.addListener(Setup::blockColours);
-            bus.addListener(Setup::itemColours);
-        });
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> DivinatureClient::registerListeners);
+
+        ResearchManager.init();
+
+        DivinaturePacketHandler.init();
 
         MinecraftForge.EVENT_BUS.addListener(this::onServerAboutToStart);
     }
 
-    private void clientSetup(FMLClientSetupEvent event) {
-        Setup.go();
-    }
-
     private void onServerAboutToStart(FMLServerAboutToStartEvent event) {
+        PlayerResearch.init();
     }
 
 
