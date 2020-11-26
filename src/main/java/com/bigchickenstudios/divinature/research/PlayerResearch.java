@@ -1,6 +1,7 @@
 package com.bigchickenstudios.divinature.research;
 
 import com.bigchickenstudios.divinature.network.ResearchInfoMessage;
+import com.bigchickenstudios.divinature.network.ResearchSelectPageMessage;
 import com.google.common.collect.Maps;
 import com.google.common.collect.Sets;
 import com.google.common.io.Files;
@@ -21,6 +22,7 @@ import net.minecraftforge.fml.LogicalSide;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.io.IOException;
 import java.io.StringReader;
@@ -41,6 +43,7 @@ public class PlayerResearch {
     private final File progressFile;
 
     private boolean sentFirstPacket = false;
+    private Research lastSelectedPage = null;
 
     public PlayerResearch(ServerPlayerEntity playerIn, File progressFileIn, ResearchManager researchManagerIn) {
         this.player = playerIn;
@@ -87,19 +90,19 @@ public class PlayerResearch {
         researchManagerIn.getAllResearch().forEach((r) -> this.checkProgressInit(r, completeMap));
     }
 
-    private boolean checkProgressInit(Research researchIn, Map<Research, Boolean> map) {
-        if (map.containsKey(researchIn)) {
-            return map.get(researchIn);
+    private boolean checkProgressInit(Research researchIn, Map<Research, Boolean> mapIn) {
+        if (mapIn.containsKey(researchIn)) {
+            return mapIn.get(researchIn);
         }
         for (Research parent : researchIn.getParents()) {
-            if (this.checkProgressInit(parent, map)) {
-                map.put(researchIn, false);
+            if (this.checkProgressInit(parent, mapIn)) {
+                mapIn.put(researchIn, false);
                 return false;
             }
         }
         this.init(researchIn);
         boolean b = this.progressMap.get(researchIn).isComplete();
-        map.put(researchIn, b);
+        mapIn.put(researchIn, b);
         return b;
     }
 
@@ -158,7 +161,7 @@ public class PlayerResearch {
             }
 
             if (!this.sentFirstPacket || !toRemove.isEmpty() || !toUpdate.isEmpty()) {
-                (new ResearchInfoMessage(!this.sentFirstPacket, toAdd, toRemove, toUpdate)).send(this.player);
+                ResearchInfoMessage.create(!this.sentFirstPacket, toAdd, toRemove, toUpdate).send(this.player);
                 this.progressChanged.clear();
                 sent = true;
             }
@@ -167,10 +170,17 @@ public class PlayerResearch {
         return sent;
     }
 
+    public void setSelectedPage(@Nullable Research researchIn) {
+        Research research = this.lastSelectedPage;
+        this.lastSelectedPage = (researchIn != null && researchIn.isPageBase()) ? researchIn : null;
+        if (this.lastSelectedPage != research) {
+            ResearchSelectPageMessage.create(this.lastSelectedPage).send(this.player);
+        }
+    }
+
     public void grant(Research researchIn, int stageIn, int taskIn) {
         ResearchProgress progress = this.progressMap.get(researchIn);
         if (progress != null && progress.grant(researchIn, stageIn, taskIn)) {
-            this.init(researchIn);
             if (progress.isComplete()) {
                 for (Research child : researchIn.getChildren()) {
                     boolean flag = true;
@@ -185,6 +195,9 @@ public class PlayerResearch {
                         this.init(child);
                     }
                 }
+            }
+            else {
+                this.init(researchIn);
             }
         }
     }
@@ -209,32 +222,32 @@ public class PlayerResearch {
         MinecraftForge.EVENT_BUS.addListener(PlayerResearch::savePlayer);
     }
 
-    public static PlayerResearch getPlayer(ServerPlayerEntity entity) {
-        return PLAYER_RESEARCH_MAP.computeIfAbsent(entity.getUniqueID(), (uuid) -> {
-            File file = new File(entity.getServer().func_240776_a_(FOLDER_NAME).toFile(), uuid + ".json");
-            return new PlayerResearch(entity, file, ResearchManager.getInstance());
+    public static PlayerResearch getPlayer(ServerPlayerEntity entityIn) {
+        return PLAYER_RESEARCH_MAP.computeIfAbsent(entityIn.getUniqueID(), (uuid) -> {
+            File file = new File(entityIn.getServer().func_240776_a_(FOLDER_NAME).toFile(), uuid + ".json");
+            return new PlayerResearch(entityIn, file, ResearchManager.getInstance());
         });
     }
 
-    private static void tickPlayer(TickEvent.PlayerTickEvent event) {
-        if (event.phase == TickEvent.Phase.END && event.side == LogicalSide.SERVER) {
-            if (PLAYER_RESEARCH_MAP.get(event.player.getUniqueID()).sendDirty()) {
-                LOGGER.info("Sent research to player {}", event.player.getDisplayNameAndUUID().getString());
+    private static void tickPlayer(TickEvent.PlayerTickEvent eventIn) {
+        if (eventIn.phase == TickEvent.Phase.END && eventIn.side == LogicalSide.SERVER) {
+            if (PLAYER_RESEARCH_MAP.get(eventIn.player.getUniqueID()).sendDirty()) {
+                LOGGER.info("Sent research to player {}@{}", eventIn.player.getName().getUnformattedComponentText(), eventIn.player.getUniqueID());
             }
         }
     }
 
-    private static void loadPlayer(PlayerEvent.LoadFromFile event) {
-        getPlayer((ServerPlayerEntity)event.getPlayer());
-        LOGGER.info("Loaded research for player {}", event.getPlayer().getDisplayNameAndUUID().getString());
+    private static void loadPlayer(PlayerEvent.LoadFromFile eventIn) {
+        getPlayer((ServerPlayerEntity)eventIn.getPlayer());
+        LOGGER.info("Loaded research for player {}@{}", eventIn.getPlayer().getName().getUnformattedComponentText(), eventIn.getPlayer().getUniqueID());
     }
 
-    private static void savePlayer(PlayerEvent.SaveToFile event) {
-        PlayerResearch playerResearch = PLAYER_RESEARCH_MAP.get(event.getPlayer().getUniqueID());
+    private static void savePlayer(PlayerEvent.SaveToFile eventIn) {
+        PlayerResearch playerResearch = PLAYER_RESEARCH_MAP.get(eventIn.getPlayer().getUniqueID());
         if (playerResearch != null) {
             playerResearch.save();
         }
-        LOGGER.info("Saved research for player {}", event.getPlayer().getDisplayNameAndUUID().getString());
+        LOGGER.info("Saved research for player {}@{}", eventIn.getPlayer().getName().getUnformattedComponentText(), eventIn.getPlayer().getUniqueID());
     }
 
     public static void reloadAll(ResearchManager researchManagerIn) {

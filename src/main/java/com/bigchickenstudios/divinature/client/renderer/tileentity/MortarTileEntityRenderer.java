@@ -1,6 +1,6 @@
 package com.bigchickenstudios.divinature.client.renderer.tileentity;
 
-import com.bigchickenstudios.divinature.Constants;
+import com.bigchickenstudios.divinature.Strings;
 import com.bigchickenstudios.divinature.tileentity.MortarTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -21,7 +21,7 @@ import javax.annotation.Nonnull;
 
 public class MortarTileEntityRenderer extends TileEntityRenderer<MortarTileEntity> {
 
-    public static final RenderMaterial TEXTURE = new RenderMaterial(PlayerContainer.LOCATION_BLOCKS_TEXTURE, Constants.rl("entity/pestle"));
+    public static final RenderMaterial TEXTURE = new RenderMaterial(PlayerContainer.LOCATION_BLOCKS_TEXTURE, Strings.createResourceLocation("entity/pestle"));
 
     private final ItemRenderer itemRenderer;
 

@@ -59,8 +59,8 @@ public class NatureArmorItem extends ArmorItem {
                 a += armor.getInt("Armor");
                 t += armor.getInt("Toughness");
             }
-            map.put(Attributes.field_233826_i_, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", a, AttributeModifier.Operation.ADDITION));
-            map.put(Attributes.field_233827_j_, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", t, AttributeModifier.Operation.ADDITION));
+            map.put(Attributes.ARMOR, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor modifier", a, AttributeModifier.Operation.ADDITION));
+            map.put(Attributes.ARMOR_TOUGHNESS, new AttributeModifier(ARMOR_MODIFIERS[slot.getIndex()], "Armor toughness", t, AttributeModifier.Operation.ADDITION));
         }
         return map;
     }
@@ -110,7 +110,7 @@ public class NatureArmorItem extends ArmorItem {
         }
 
         @Override
-        public float func_230304_f_() {
+        public float getKnockbackResistance() {
             return 0.0F;
         }
     };

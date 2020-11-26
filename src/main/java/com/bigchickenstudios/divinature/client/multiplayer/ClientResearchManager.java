@@ -3,7 +3,10 @@ package com.bigchickenstudios.divinature.client.multiplayer;
 import com.bigchickenstudios.divinature.client.DivinatureClient;
 import com.bigchickenstudios.divinature.client.gui.toasts.ResearchToast;
 import com.bigchickenstudios.divinature.event.PlayerEvents;
+import com.bigchickenstudios.divinature.event.research.ResearchCompletedEvent;
 import com.bigchickenstudios.divinature.network.ResearchInfoMessage;
+import com.bigchickenstudios.divinature.network.ResearchSeenMessage;
+import com.bigchickenstudios.divinature.network.ResearchSelectPageMessage;
 import com.bigchickenstudios.divinature.research.Research;
 import com.bigchickenstudios.divinature.research.ResearchList;
 import com.bigchickenstudios.divinature.research.ResearchProgress;
@@ -16,6 +19,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.function.BiFunction;
@@ -45,12 +50,17 @@ public final class ClientResearchManager {
         this.researchList.removeAll(message.getToRemove());
         this.researchList.loadResearch(message.getToAdd());
 
+        List<ResourceLocation> researchCompleted = new ArrayList<>();
+
         for (Map.Entry<ResourceLocation, ResearchProgress.Builder> entry : message.getToUpdate().entrySet()) {
             Research research = this.researchList.getResearch(entry.getKey());
             if (research != null) {
                 ResearchProgress progress = entry.getValue().build(research);
-                if (!message.isFirstSync() && progress.isComplete()) {
-                    this.mc.getToastGui().add(new ResearchToast(research));
+                if (progress.isComplete()) {
+                    if (!message.isFirstSync()) {
+                        this.mc.getToastGui().add(new ResearchToast(research));
+                    }
+                    researchCompleted.add(research.getId());
                 }
                 this.progress.put(research, progress);
             }
@@ -58,14 +68,16 @@ public final class ClientResearchManager {
                 LOGGER.warn("Server informed client about unknown research: {}", entry.getKey());
             }
         }
+
+        ResearchCompletedEvent.post(researchCompleted);
     }
 
-    public void setSelectedPage(Research page, boolean send) {
-        if (page != null && send) {
-
+    public void setSelectedPage(Research pageIn, boolean sendIn) {
+        if (pageIn != null && sendIn) {
+            ResearchSeenMessage.openPage(pageIn).send();
         }
-        if (page != this.selectedPage) {
-            this.selectedPage = page;
+        if (pageIn != this.selectedPage) {
+            this.selectedPage = pageIn;
             if (this.listener != null) {
                 this.listener.setSelectedPage(this.selectedPage);
             }

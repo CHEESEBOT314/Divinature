@@ -76,31 +76,29 @@ public class ResearchInfoMessage implements IMessage {
     public void read(PacketBuffer buffer) {
         this.firstSync = buffer.readBoolean();
 
-        int size = buffer.readVarInt();
         this.toAdd = Maps.newHashMap();
-        while (size > 0) {
+        for (int i = buffer.readVarInt(); i > 0; i--) {
             this.toAdd.put(buffer.readResourceLocation(), Research.Builder.read(buffer));
-            size--;
         }
 
-        size = buffer.readVarInt();
         this.toRemove = Sets.newLinkedHashSet();
-        while (size > 0) {
+        for (int i = buffer.readVarInt(); i > 0; i--) {
             this.toRemove.add(buffer.readResourceLocation());
-            size--;
         }
 
-        size = buffer.readVarInt();
         this.toUpdate = Maps.newHashMap();
-        while (size > 0) {
+        for (int i = buffer.readVarInt(); i > 0; i--) {
             this.toUpdate.put(buffer.readResourceLocation(), ResearchProgress.Builder.read(buffer));
-            size--;
         }
     }
 
     @Override
     public void handle(NetworkEvent.Context ctx) {
         DivinatureClient.getResearchManager().read(this);
+    }
+
+    public static ResearchInfoMessage create(boolean firstSyncIn, Collection<Research> toAddIn, Set<ResourceLocation> toRemoveIn, Map<ResourceLocation, ResearchProgress> toUpdateIn) {
+        return new ResearchInfoMessage(firstSyncIn, toAddIn, toRemoveIn, toUpdateIn);
     }
 
     public void send(ServerPlayerEntity entity) {

@@ -8,6 +8,7 @@
             "item": "divinature:burdock_root"
         }
     ],
+    "research": "divinature:root",
     "output": {
         "item": "minecraft:gold_ingot"
     },

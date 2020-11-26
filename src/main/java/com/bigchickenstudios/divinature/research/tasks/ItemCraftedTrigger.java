@@ -1,8 +1,6 @@
 package com.bigchickenstudios.divinature.research.tasks;
 
-import com.bigchickenstudios.divinature.research.ITaskInstance;
 import com.bigchickenstudios.divinature.research.PlayerResearch;
-import com.bigchickenstudios.divinature.research.ResearchManager;
 import com.google.gson.JsonObject;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.crafting.Ingredient;

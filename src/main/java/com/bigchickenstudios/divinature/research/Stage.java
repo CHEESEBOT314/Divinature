@@ -49,7 +49,7 @@ public class Stage {
         }
         Stage stage = new Stage(tasks);
         if (jsonObject.has("info")) {
-            stage.setInfo(ITextComponent.Serializer.func_240641_a_(jsonObject.get("info")));
+            stage.setInfo(ITextComponent.Serializer.getComponentFromJson(jsonObject.get("info")));
         }
         else {
             throw new JsonSyntaxException("Missing info, expected to find a JsonElement");

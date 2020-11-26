@@ -1,6 +1,6 @@
 package com.bigchickenstudios.divinature.item.crafting;
 
-import com.bigchickenstudios.divinature.Constants;
+import com.bigchickenstudios.divinature.Strings;
 import com.bigchickenstudios.divinature.client.multiplayer.ClientResearchManager;
 import com.bigchickenstudios.divinature.research.PlayerResearch;
 import net.minecraft.entity.player.PlayerEntity;
@@ -25,12 +25,12 @@ public final class ModRecipeTypes {
     public static final IRecipeType<InfuserRecipe> INFUSER = create("infuser");
 
     static {
-        registerPouchRecipe(INFUSER);
+        registerPouchRecipeWithResearch(INFUSER);
     }
 
     private static <T extends IRecipe<?>> IRecipeType<T> create(String name) {
         return new IRecipeType<T>() {
-            private final ResourceLocation loc = new ResourceLocation(Constants.MODID, name);
+            private final ResourceLocation loc = new ResourceLocation(Strings.MODID, name);
             @Override
             public String toString() {
                 return this.loc.toString();
@@ -40,7 +40,7 @@ public final class ModRecipeTypes {
 
     private static <C extends IInventory, T extends IRecipe<C> & IPouchRecipe> void registerPouchRecipe(IRecipeType<T> type) {
         POUCH_CHECKERS.add((pe, pi) -> {
-            for (T t : pe.getEntityWorld().getRecipeManager().func_241447_a_(type)) {
+            for (T t : pe.getEntityWorld().getRecipeManager().getRecipesForType(type)) {
                 if (t.matchesPouch(pi)) {
                     return true;
                 }
@@ -51,7 +51,7 @@ public final class ModRecipeTypes {
 
     private static <C extends IInventory, T extends IRecipe<C> & IPouchRecipe & IResearchRecipe> void registerPouchRecipeWithResearch(IRecipeType<T> type) {
         POUCH_CHECKERS.add((pe, pi) -> {
-            for (T t : pe.getEntityWorld().getRecipeManager().func_241447_a_(type)) {
+            for (T t : pe.getEntityWorld().getRecipeManager().getRecipesForType(type)) {
                 if (t.matchesPouch(pi) && RESEARCH_CHECKER.apply(pe, t.getRequiredResearch())) {
                     return true;
                 }

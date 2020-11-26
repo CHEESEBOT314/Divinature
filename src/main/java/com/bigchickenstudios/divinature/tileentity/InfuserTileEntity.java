@@ -146,7 +146,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     }
 
     @Override
-    public void func_230337_a_(BlockState state, CompoundNBT compound) {
+    public void read(BlockState state, CompoundNBT compound) {
         this.readMain(compound);
 
         this.pouch = FilledPouchItem.readContents(compound);
@@ -154,7 +154,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     }
 
     private void readMain(CompoundNBT compound) {
-        super.func_230337_a_(null, compound);
+        super.read(null, compound);
         this.top = ItemStack.read(compound.getCompound("TopItem"));
         this.colour = compound.getInt("Colour");
     }

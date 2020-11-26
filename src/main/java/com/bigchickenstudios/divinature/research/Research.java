@@ -236,7 +236,7 @@ public class Research {
             }
             
             if (json.has("info")) {
-                builder.withInfo(ITextComponent.Serializer.func_240641_a_(json.get("info")));
+                builder.withInfo(ITextComponent.Serializer.getComponentFromJson(json.get("info")));
             }
             else {
                 throw new JsonSyntaxException("Missing info, expect to find a JsonElement");
@@ -326,7 +326,7 @@ public class Research {
         public static PageInfo deserialize(JsonObject jsonObject) {
             ITextComponent info;
             if (jsonObject.has("info")) {
-                info = ITextComponent.Serializer.func_240641_a_(jsonObject.get("info"));
+                info = ITextComponent.Serializer.getComponentFromJson(jsonObject.get("info"));
             }
             else {
                 throw new JsonSyntaxException("Missing info, expected to find a JsonElement");

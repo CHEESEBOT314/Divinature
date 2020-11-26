@@ -94,7 +94,7 @@ public final class DivinatureClient {
     }
 
     public static <C extends IInventory, T extends IRecipe<C>> List<T> getRecipes(IRecipeType<T> type) {
-        return Minecraft.getInstance().world.getRecipeManager().func_241447_a_(type);
+        return Minecraft.getInstance().world.getRecipeManager().getRecipesForType(type);
     }
 
     private DivinatureClient() {}

@@ -2,16 +2,16 @@ package com.bigchickenstudios.divinature;
 
 import net.minecraft.util.ResourceLocation;
 
-public final class Constants {
+public final class Strings {
 
     public static final String MODID = "divinature";
 
-    public static String rls(String path) {
+    public static String createResourceLocationString(String path) {
         return String.format("%s:%s", MODID, path);
     }
-    public static ResourceLocation rl(String path) {
+    public static ResourceLocation createResourceLocation(String path) {
         return new ResourceLocation(MODID, path);
     }
 
-    private Constants() {}
+    private Strings() {}
 }

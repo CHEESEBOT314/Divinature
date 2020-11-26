@@ -1,19 +1,25 @@
 package com.bigchickenstudios.divinature.client.gui.research;
 
+import com.bigchickenstudios.divinature.Strings;
 import com.bigchickenstudios.divinature.client.multiplayer.ClientResearchManager;
+import com.bigchickenstudios.divinature.network.ResearchSeenMessage;
 import com.bigchickenstudios.divinature.research.Research;
 import com.bigchickenstudios.divinature.research.ResearchProgress;
 import com.google.common.collect.Maps;
 import net.minecraft.client.gui.chat.NarratorChatListener;
 import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.Map;
 
 public class ResearchScreen extends Screen implements ClientResearchManager.IListener {
 
+    private static final ResourceLocation WINDOW = Strings.createResourceLocation("textures/gui/research/window.png");
+
     private final ClientResearchManager clientResearchManager;
     private final Map<Research, ResearchPageGui> pages = Maps.newLinkedHashMap();
     private ResearchPageGui selectedPage;
+    private boolean isScrolling = false;
 
     public ResearchScreen(ClientResearchManager clientResearchManagerIn) {
         super(NarratorChatListener.EMPTY);
@@ -21,7 +27,7 @@ public class ResearchScreen extends Screen implements ClientResearchManager.ILis
     }
 
     @Override
-    protected void func_231160_c_() {
+    protected void init() {
         this.pages.clear();
         this.selectedPage = null;
         this.clientResearchManager.setListener(this);
@@ -34,9 +40,14 @@ public class ResearchScreen extends Screen implements ClientResearchManager.ILis
     }
 
     @Override
-    public void func_231164_f_() {
+    public void onClose() {
         this.clientResearchManager.setListener(null);
+        ResearchSeenMessage.close().send();
+    }
 
+    @Override
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        return false;
     }
 
     @Override

@@ -1,9 +1,8 @@
 package com.bigchickenstudios.divinature.block;
 
-import com.bigchickenstudios.divinature.Constants;
+import com.bigchickenstudios.divinature.Strings;
 import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.material.MaterialColor;
 import net.minecraft.potion.Effects;
 import net.minecraftforge.common.ToolType;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -37,7 +36,7 @@ public final class ModBlocks {
     public static final RegistryObject<InfuserBlock> INFUSER;
 
     static {
-        BLOCK_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MODID);
+        BLOCK_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, Strings.MODID);
 
         BLACKBELL = create("blackbell", (p) -> new FlowerBlock(Effects.WEAKNESS, 9, p), Material.PLANTS, (p) -> p.doesNotBlockMovement().hardnessAndResistance(0.0F).sound(SoundType.PLANT));
 

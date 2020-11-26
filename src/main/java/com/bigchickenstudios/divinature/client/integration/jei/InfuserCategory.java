@@ -1,69 +1,31 @@
 package com.bigchickenstudios.divinature.client.integration.jei;
 
 import com.bigchickenstudios.divinature.block.ModBlocks;
-import com.bigchickenstudios.divinature.client.DivinatureClient;
 import com.bigchickenstudios.divinature.item.crafting.InfuserRecipe;
 import com.bigchickenstudios.divinature.item.crafting.ModRecipeTypes;
 import com.google.common.collect.ImmutableList;
 import mezz.jei.api.constants.VanillaTypes;
 import mezz.jei.api.gui.IRecipeLayout;
-import mezz.jei.api.gui.drawable.IDrawable;
 import mezz.jei.api.gui.ingredient.IGuiItemStackGroup;
 import mezz.jei.api.helpers.IGuiHelper;
 import mezz.jei.api.ingredients.IIngredients;
-import mezz.jei.api.recipe.category.IRecipeCategory;
-import mezz.jei.api.registration.IRecipeRegistration;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.Ingredient;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
-public class InfuserCategory implements IRecipeCategory<InfuserRecipe> {
-
-    private final ResourceLocation uid = new ResourceLocation(ModRecipeTypes.INFUSER.toString());
-    private final String title;
-    private final IDrawable background;
-    private final IDrawable icon;
+public class InfuserCategory extends DivinatureResearchCategory<InfuserRecipe.Inv, InfuserRecipe> {
 
     public InfuserCategory(IGuiHelper iGuiHelperIn) {
-        this.title = I18n.format("divinature.jei.infuser");
-        this.background = iGuiHelperIn.createDrawable(DivinaturePlugin.BACKGROUND_TEXTURES, 0, 0, 148, 60);
-        this.icon = iGuiHelperIn.createDrawableIngredient(new ItemStack(ModBlocks.INFUSER.get()));
-    }
-
-    @Nonnull
-    @Override
-    public ResourceLocation getUid() {
-        return this.uid;
-    }
-
-    @Nonnull
-    @Override
-    public Class<? extends InfuserRecipe> getRecipeClass() {
-        return InfuserRecipe.class;
-    }
-
-    @Nonnull
-    @Override
-    public String getTitle() {
-        return this.title;
-    }
-
-    @Nonnull
-    @Override
-    public IDrawable getBackground() {
-        return this.background;
-    }
-
-    @Nonnull
-    @Override
-    public IDrawable getIcon() {
-        return this.icon;
+        super(  ModRecipeTypes.INFUSER,
+                InfuserRecipe.class,
+                I18n.format("divinature.jei.infuser"),
+                iGuiHelperIn.createDrawable(DivinaturePlugin.BACKGROUND_TEXTURES, 0, 0, 148, 60),
+                iGuiHelperIn.createDrawableIngredient(new ItemStack(ModBlocks.INFUSER.get())));
     }
 
     @Override
@@ -97,14 +59,5 @@ public class InfuserCategory implements IRecipeCategory<InfuserRecipe> {
         }
 
         return Collections.emptyList();
-    }
-
-    @Override
-    public boolean handleClick(InfuserRecipe recipe, double mouseX, double mouseY, int mouseButton) {
-        return false;
-    }
-
-    public void registerRecipes(IRecipeRegistration registration) {
-        registration.addRecipes(DivinatureClient.getRecipes(ModRecipeTypes.INFUSER), this.uid);
     }
 }

@@ -1,6 +1,6 @@
 package com.bigchickenstudios.divinature.tileentity;
 
-import com.bigchickenstudios.divinature.Constants;
+import com.bigchickenstudios.divinature.Strings;
 import com.bigchickenstudios.divinature.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
@@ -18,7 +18,7 @@ public final class ModTileEntityTypes {
     public static final RegistryObject<TileEntityType<InfuserTileEntity>> INFUSER;
 
     static {
-        TILE_ENTITY_TYPE_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Constants.MODID);
+        TILE_ENTITY_TYPE_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.TILE_ENTITIES, Strings.MODID);
 
         MORTAR = create("mortar", MortarTileEntity::new, ModBlocks.MORTAR);
         INFUSER = create("infuser", InfuserTileEntity::new, ModBlocks.INFUSER);

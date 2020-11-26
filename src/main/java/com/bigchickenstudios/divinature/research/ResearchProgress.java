@@ -41,7 +41,9 @@ public class ResearchProgress {
                 if (this.stage == researchIn.getStages().size()) {
                     this.complete = true;
                     this.tasks = new boolean[0];
+                    return true;
                 }
+                this.tasks = new boolean[researchIn.getStages().get(this.stage).getTasks().size()];
                 return true;
             }
         }

@@ -1,6 +1,6 @@
 package com.bigchickenstudios.divinature.item;
 
-import com.bigchickenstudios.divinature.Constants;
+import com.bigchickenstudios.divinature.Strings;
 import com.bigchickenstudios.divinature.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -17,6 +17,8 @@ import java.util.function.UnaryOperator;
 
 public final class ModItems {
 
+    public static final RegistryObject<ResearchBookItem> RESEARCH_BOOK;
+
     public static final RegistryObject<BlockNamedItem> BURDOCK_SEEDS;
     public static final RegistryObject<Item> BURDOCK_ROOT;
 
@@ -30,7 +32,7 @@ public final class ModItems {
     private static final BiFunction<Item.Properties, Boolean, Item.Properties> GROUP_FUNC;
 
     static {
-        ITEM_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MODID);
+        ITEM_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Strings.MODID);
 
         create(ModBlocks.BLACKBELL, true);
 
@@ -51,6 +53,8 @@ public final class ModItems {
         create(ModBlocks.MORTAR, true);
         create(ModBlocks.INFUSER, true);
 
+        RESEARCH_BOOK = create("research_book", ResearchBookItem::new, (p) -> p.maxStackSize(1).rarity(Rarity.UNCOMMON), true);
+
         BURDOCK_SEEDS = create("burdock_seeds", ModBlocks.BURDOCK, true);
         BURDOCK_ROOT = create("burdock_root", true);
 
@@ -59,7 +63,7 @@ public final class ModItems {
 
         NATURE_HELMET = create("nature_helmet", (p) -> new NatureArmorItem(EquipmentSlotType.HEAD, p), I, true);
 
-        GROUP = new ItemGroup(Constants.MODID) {
+        GROUP = new ItemGroup(Strings.MODID) {
             @Nonnull
             @Override
             public ItemStack createIcon() {

@@ -1,5 +1,6 @@
 package com.bigchickenstudios.divinature.research;
 
+import com.bigchickenstudios.divinature.research.tasks.ITaskInstance;
 import com.bigchickenstudios.divinature.research.tasks.TaskTrigger;
 import com.bigchickenstudios.divinature.research.tasks.Triggers;
 import com.google.gson.JsonObject;
@@ -42,7 +43,7 @@ public class Task<S, T extends ITaskInstance<S>> {
         JsonObject conditions = JSONUtils.getJsonObject(jsonObject, "conditions");
         Task<?, ?> task = taskTrigger.deserializeTask(conditions);
         if (jsonObject.has("info")) {
-            task.setInfo(ITextComponent.Serializer.func_240641_a_(jsonObject.get("info")));
+            task.setInfo(ITextComponent.Serializer.getComponentFromJson(jsonObject.get("info")));
         }
         else {
             throw new JsonSyntaxException("Missing info, expected to find a JsonElement");

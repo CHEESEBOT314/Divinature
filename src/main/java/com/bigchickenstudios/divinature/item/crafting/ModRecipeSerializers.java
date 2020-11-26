@@ -1,6 +1,6 @@
 package com.bigchickenstudios.divinature.item.crafting;
 
-import com.bigchickenstudios.divinature.Constants;
+import com.bigchickenstudios.divinature.Strings;
 import net.minecraft.item.crafting.IRecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
@@ -14,7 +14,7 @@ public final class ModRecipeSerializers {
     public static final RegistryObject<InfuserRecipe.Serializer> INFUSER;
 
     static {
-        RECIPE_SERIALIZER_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Constants.MODID);
+        RECIPE_SERIALIZER_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, Strings.MODID);
 
         INFUSER = create("infuser", InfuserRecipe.Serializer::new);
     }

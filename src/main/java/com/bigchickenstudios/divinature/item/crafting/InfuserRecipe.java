@@ -15,19 +15,21 @@ import javax.annotation.Nullable;
 import java.util.Optional;
 
 
-public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements IPouchRecipe {
+public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements IPouchRecipe, IResearchRecipe {
 
     private final Ingredient input;
     private final NonNullList<Ingredient> pouch;
+    private final ResourceLocation research;
 
     private final ItemStack output;
 
     private final int time;
 
-    private InfuserRecipe(ResourceLocation idIn, Ingredient inputIn, NonNullList<Ingredient> pouchIn, ItemStack outputIn, int timeIn) {
+    private InfuserRecipe(ResourceLocation idIn, Ingredient inputIn, NonNullList<Ingredient> pouchIn, ResourceLocation researchIn, ItemStack outputIn, int timeIn) {
         super(idIn);
         this.input = inputIn;
         this.pouch = pouchIn;
+        this.research = researchIn;
         this.output = outputIn;
         this.time = timeIn;
     }
@@ -39,6 +41,11 @@ public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements 
     @Override
     public NonNullList<Ingredient> getPouch() {
         return this.pouch;
+    }
+
+    @Override
+    public ResourceLocation getRequiredResearch() {
+        return this.research;
     }
 
     public int getTime() {
@@ -103,8 +110,9 @@ public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements 
         public InfuserRecipe read(@Nonnull ResourceLocation id, @Nonnull JsonObject json) {
             Ingredient input = Ingredient.deserialize(JSONUtils.isJsonArray(json, "input") ? JSONUtils.getJsonArray(json, "input") : JSONUtils.getJsonObject(json, "input"));
             NonNullList<Ingredient> pouch = IPouchRecipe.readPouch(JSONUtils.getJsonArray(json, "pouch"));
+            ResourceLocation research = new ResourceLocation(JSONUtils.getString(json, "research"));
             ItemStack output = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "output"));
-            return new InfuserRecipe(id, input, pouch, output, JSONUtils.getInt(json, "time"));
+            return new InfuserRecipe(id, input, pouch, research, output, JSONUtils.getInt(json, "time"));
         }
 
         @Nullable
@@ -112,15 +120,17 @@ public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements 
         public InfuserRecipe read(@Nonnull ResourceLocation id, @Nonnull PacketBuffer buffer) {
             Ingredient input = Ingredient.read(buffer);
             NonNullList<Ingredient> pouch = IPouchRecipe.readPouch(buffer);
+            ResourceLocation research = buffer.readResourceLocation();
             ItemStack output = buffer.readItemStack();
             int time = buffer.readVarInt();
-            return new InfuserRecipe(id, input, pouch, output, time);
+            return new InfuserRecipe(id, input, pouch, research, output, time);
         }
 
         @Override
         public void write(@Nonnull PacketBuffer buffer, @Nonnull InfuserRecipe recipe) {
             recipe.input.write(buffer);
-            IPouchRecipe.writePouch(recipe.getPouch(), buffer);
+            IPouchRecipe.writePouch(recipe.pouch, buffer);
+            buffer.writeResourceLocation(recipe.research);
             buffer.writeItemStack(recipe.output);
             buffer.writeVarInt(recipe.time);
         }

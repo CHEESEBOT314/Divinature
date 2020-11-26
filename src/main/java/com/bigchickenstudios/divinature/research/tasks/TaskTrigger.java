@@ -1,6 +1,5 @@
 package com.bigchickenstudios.divinature.research.tasks;
 
-import com.bigchickenstudios.divinature.research.ITaskInstance;
 import com.bigchickenstudios.divinature.research.PlayerResearch;
 import com.bigchickenstudios.divinature.research.Research;
 import com.bigchickenstudios.divinature.research.Task;

@@ -1,4 +1,4 @@
-package com.bigchickenstudios.divinature.research;
+package com.bigchickenstudios.divinature.research.tasks;
 
 import java.util.function.Predicate;
 
