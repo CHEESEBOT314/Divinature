@@ -10,7 +10,13 @@
 
     "block.divinature.elm_planks": "Elm Planks",
     "block.divinature.elm_log": "Elm Log",
+	"block.divinature.stripped_elm_log": "Stripped Elm Log",
     "block.divinature.elm_leaves": "Elm Leaves",
+	
+	"block.divinature.magnolia_planks": "Magnolia Planks",
+    "block.divinature.magnolia_log": "Magnolia Log",
+	"block.divinature.stripped_magnolia_log": "Stripped Magnolia Log",
+    "block.divinature.magnolia_leaves": "Magnolia Leaves",
 
     "block.divinature.mortar": "Mortar and Pestle",
     "block.divinature.infuser": "Infuser",
