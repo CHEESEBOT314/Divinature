@@ -5,6 +5,9 @@
     "item.divinature.burdock_root": "Burdock Root",
     "item.divinature.empty_pouch": "Empty Pouch",
     "item.divinature.filled_pouch": "Filled Pouch",
+	"item.divinature.research_book": "Nature Journal",
+	
+	"item.divinature.nature_helmet": "Silken Hood",
 
     "block.divinature.blackbell": "Blackbell",
 
@@ -12,11 +15,15 @@
     "block.divinature.elm_log": "Elm Log",
 	"block.divinature.stripped_elm_log": "Stripped Elm Log",
     "block.divinature.elm_leaves": "Elm Leaves",
+	"block.divinature.stripped_elm_wood": "Stripped Elm Wood",
+    "block.divinature.elm_wood": "Elm Wood",
 	
 	"block.divinature.magnolia_planks": "Magnolia Planks",
     "block.divinature.magnolia_log": "Magnolia Log",
 	"block.divinature.stripped_magnolia_log": "Stripped Magnolia Log",
     "block.divinature.magnolia_leaves": "Magnolia Leaves",
+	"block.divinature.stripped_magnolia_wood": "Stripped Magnolia Wood",
+    "block.divinature.magnolia_wood": "Magnolia Wood",
 
     "block.divinature.mortar": "Mortar and Pestle",
     "block.divinature.infuser": "Infuser",
