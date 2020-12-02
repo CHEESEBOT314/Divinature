@@ -32,7 +32,7 @@ public class MortarTileEntityRenderer extends TileEntityRenderer<MortarTileEntit
         this.itemRenderer = itemRendererIn;
         this.model = new ModelRenderer(16, 16, 0, 0);
         this.model.addBox(-5.0f, -2.0f, -1.0f, 2.0f, 7.0f, 2.0f);
-        this.model.setRotationPoint(8.0f, 9.0f, 8.0f);
+        this.model.setRotationPoint(8.0f, 13.0f, 8.0f);
         this.model.rotateAngleZ = (float)Math.PI * 3.0F / 4.0f;
     }
 
@@ -44,7 +44,7 @@ public class MortarTileEntityRenderer extends TileEntityRenderer<MortarTileEntit
                 ItemStack stack = list.get(i);
                 if (!stack.isEmpty()) {
                     matrixStack.push();
-                    matrixStack.translate(0.5D, 0.13671875D, 0.5D);
+                    matrixStack.translate(0.5D, 0.38671875D, 0.5D);
                     matrixStack.rotate(Vector3f.YP.rotationDegrees(90.0F * (i % 4)));
                     matrixStack.rotate(Vector3f.XP.rotationDegrees(90.0F));
                     if (i > 4) {

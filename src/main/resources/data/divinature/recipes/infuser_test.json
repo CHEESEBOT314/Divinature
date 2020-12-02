@@ -12,5 +12,6 @@
     "output": {
         "item": "minecraft:gold_ingot"
     },
-    "time": 100
+    "time": 400,
+    "colours": [15913996, 11903081]
 }

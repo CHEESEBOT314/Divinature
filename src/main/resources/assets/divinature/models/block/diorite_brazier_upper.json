@@ -1,0 +1,6 @@
+{
+    "parent": "divinature:block/brazier_upper",
+    "textures": {
+        "base": "minecraft:block/diorite"
+    }
+}

@@ -52,6 +52,10 @@ public final class ModItems {
 
         create(ModBlocks.MORTAR, true);
         create(ModBlocks.INFUSER, true);
+        create(ModBlocks.STONE_BRAZIER, true);
+        create(ModBlocks.GRANITE_BRAZIER, true);
+        create(ModBlocks.DIORITE_BRAZIER, true);
+        create(ModBlocks.ANDESITE_BRAZIER, true);
 
         RESEARCH_BOOK = create("research_book", ResearchBookItem::new, (p) -> p.maxStackSize(1).rarity(Rarity.UNCOMMON), true);
 

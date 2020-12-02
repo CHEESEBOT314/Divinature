@@ -14,9 +14,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nonnull;
@@ -107,6 +105,7 @@ public class MortarTileEntity extends TileEntity implements ITickableTileEntity 
         if (id == 1) {
             this.isGrinding = true;
             this.grindTime = 0;
+            this.getWorld().playSound(this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D, SoundEvents.BLOCK_GRINDSTONE_USE, SoundCategory.BLOCKS, 1.0F, this.getWorld().rand.nextFloat() * 0.1F + 0.3F, false);
             return true;
         }
         return super.receiveClientEvent(id, type);

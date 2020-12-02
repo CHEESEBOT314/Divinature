@@ -5,8 +5,7 @@
 		"log": "divinature:block/infuser_log",
 		"base": "block/cobblestone",
 		"kindling": "block/hay_block_top",
-		"particle": "divinature:block/infuser_mesh",
-		"fire": "block/campfire_fire"
+		"particle": "divinature:block/infuser_mesh"
 	},
 	"elements": [
 		{

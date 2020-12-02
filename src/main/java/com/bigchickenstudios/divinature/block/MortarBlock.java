@@ -23,7 +23,7 @@ public class MortarBlock extends Block {
 
     public static final IntegerProperty FILL = IntegerProperty.create("fill", 0, 4);
 
-    private static final VoxelShape SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 6.0D, 13.0D);
+    private static final VoxelShape SHAPE = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 10.0D, 13.0D);
 
     public MortarBlock(Properties properties) {
         super(properties);

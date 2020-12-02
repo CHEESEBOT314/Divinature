@@ -5,6 +5,7 @@ import com.bigchickenstudios.divinature.client.DivinatureClient;
 import com.bigchickenstudios.divinature.item.ModItems;
 import com.bigchickenstudios.divinature.item.crafting.ModRecipeSerializers;
 import com.bigchickenstudios.divinature.network.DivinaturePacketHandler;
+import com.bigchickenstudios.divinature.particle.ModParticleTypes;
 import com.bigchickenstudios.divinature.research.PlayerResearch;
 import com.bigchickenstudios.divinature.research.ResearchManager;
 import com.bigchickenstudios.divinature.tileentity.ModTileEntityTypes;
@@ -28,6 +29,7 @@ public class Divinature  {
 
         ModBlocks.init(bus);
         ModItems.init(bus);
+        ModParticleTypes.init(bus);
         ModRecipeSerializers.init(bus);
         ModTileEntityTypes.init(bus);
 
@@ -44,5 +46,5 @@ public class Divinature  {
         PlayerResearch.init();
     }
 
-
+    
 }

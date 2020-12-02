@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "half=lower,lit=false": { "model":  "divinature:block/diorite_brazier_lower"},
+        "half=lower,lit=true": { "model":  "divinature:block/diorite_brazier_lower"},
+        "half=upper,lit=false": { "model":  "divinature:block/diorite_brazier_upper"},
+        "half=upper,lit=true": { "model":  "divinature:block/diorite_brazier_upper"}
+    }
+}

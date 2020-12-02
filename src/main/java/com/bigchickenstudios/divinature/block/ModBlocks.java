@@ -34,6 +34,10 @@ public final class ModBlocks {
 
     public static final RegistryObject<MortarBlock> MORTAR;
     public static final RegistryObject<InfuserBlock> INFUSER;
+    public static final RegistryObject<BrazierBlock> STONE_BRAZIER;
+    public static final RegistryObject<BrazierBlock> GRANITE_BRAZIER;
+    public static final RegistryObject<BrazierBlock> DIORITE_BRAZIER;
+    public static final RegistryObject<BrazierBlock> ANDESITE_BRAZIER;
 
     static {
         BLOCK_DEFERRED_REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, Strings.MODID);
@@ -58,6 +62,10 @@ public final class ModBlocks {
 
         MORTAR = create("mortar", MortarBlock::new, Material.ROCK);
         INFUSER = create("infuser", InfuserBlock::new, Material.ROCK);
+        STONE_BRAZIER = create("stone_brazier", BrazierBlock::new, Material.ROCK);
+        GRANITE_BRAZIER = create("granite_brazier", BrazierBlock::new, Material.ROCK);
+        DIORITE_BRAZIER = create("diorite_brazier", BrazierBlock::new, Material.ROCK);
+        ANDESITE_BRAZIER = create("andesite_brazier", BrazierBlock::new, Material.ROCK);
     }
 
     public static void init(IEventBus bus) {

@@ -2,10 +2,12 @@ package com.bigchickenstudios.divinature.client;
 
 import com.bigchickenstudios.divinature.block.ModBlocks;
 import com.bigchickenstudios.divinature.client.multiplayer.ClientResearchManager;
+import com.bigchickenstudios.divinature.client.particle.InfuserParticle;
 import com.bigchickenstudios.divinature.client.renderer.overlay.MortarOverlayRenderer;
 import com.bigchickenstudios.divinature.client.renderer.overlay.OverlayRenderer;
 import com.bigchickenstudios.divinature.client.renderer.tileentity.InfuserTileEntityRenderer;
 import com.bigchickenstudios.divinature.client.renderer.tileentity.MortarTileEntityRenderer;
+import com.bigchickenstudios.divinature.particle.ModParticleTypes;
 import com.bigchickenstudios.divinature.tileentity.ModTileEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
@@ -23,6 +25,7 @@ import net.minecraft.tileentity.TileEntityType;
 import net.minecraft.world.FoliageColors;
 import net.minecraft.world.biome.BiomeColors;
 import net.minecraftforge.client.event.ColorHandlerEvent;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.RegistryObject;
@@ -48,6 +51,7 @@ public final class DivinatureClient {
         bus.addListener(DivinatureClient::preStitch);
         bus.addListener(DivinatureClient::blockColours);
         bus.addListener(DivinatureClient::itemColours);
+        bus.addListener(DivinatureClient::particleFactories);
     }
 
     private static void init(FMLClientSetupEvent event) {
@@ -56,6 +60,10 @@ public final class DivinatureClient {
         setRenderType(ModBlocks.BURDOCK, RenderType.getCutout());
         setRenderType(ModBlocks.MORTAR, RenderType.getCutout());
         setRenderType(ModBlocks.INFUSER, RenderType.getCutout());
+        setRenderType(ModBlocks.STONE_BRAZIER, RenderType.getCutout());
+        setRenderType(ModBlocks.GRANITE_BRAZIER, RenderType.getCutout());
+        setRenderType(ModBlocks.DIORITE_BRAZIER, RenderType.getCutout());
+        setRenderType(ModBlocks.ANDESITE_BRAZIER, RenderType.getCutout());
 
         bindRenderer(ModTileEntityTypes.MORTAR, (d) -> new MortarTileEntityRenderer(d, Minecraft.getInstance().getItemRenderer()));
         bindRenderer(ModTileEntityTypes.INFUSER, (d) -> new InfuserTileEntityRenderer(d, Minecraft.getInstance().getItemRenderer()));
@@ -91,6 +99,10 @@ public final class DivinatureClient {
         event.getItemColors().register((stack, i) ->
             event.getBlockColors().getColor(((BlockItem)stack.getItem()).getBlock().getDefaultState(), null, null, i),
                 ModBlocks.ELM_LEAVES.get());
+    }
+
+    private static void particleFactories(ParticleFactoryRegisterEvent event) {
+        Minecraft.getInstance().particles.registerFactory(ModParticleTypes.INFUSER.get(), InfuserParticle.Factory::new);
     }
 
     public static <C extends IInventory, T extends IRecipe<C>> List<T> getRecipes(IRecipeType<T> type) {

@@ -1,0 +1,6 @@
+{
+    "parent": "divinature:block/infuser_lower",
+    "textures": {
+        "fire": "divinature:block/infuser_fire_off"
+    }
+}

@@ -3,27 +3,35 @@ package com.bigchickenstudios.divinature.tileentity;
 import com.bigchickenstudios.divinature.block.InfuserBlock;
 import com.bigchickenstudios.divinature.item.FilledPouchItem;
 import com.bigchickenstudios.divinature.item.crafting.InfuserRecipe;
+import com.bigchickenstudios.divinature.particle.ModParticleTypes;
+import com.bigchickenstudios.divinature.research.PlayerResearch;
+import com.bigchickenstudios.divinature.research.ResearchManager;
+import com.bigchickenstudios.divinature.research.ResearchUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
+import net.minecraft.util.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Optional;
+import java.util.Random;
 
 public class InfuserTileEntity extends TileEntity implements ITickableTileEntity {
 
     private ItemStack top = ItemStack.EMPTY;
-    private int colour = 0xFFFFFF;
+    private int[] colours;
+    private int colour = 0;
+
+    private static final Random RANDOM = new Random();
 
     private NonNullList<ItemStack> pouch = NonNullList.create();
     private InfuserRecipe recipe;
@@ -37,7 +45,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     public void tick() {
         if (this.isActive() && this.getWorld() != null && !this.getWorld().isRemote()) {
             if (this.recipe == null) {
-                if (!this.loadRecipe(this.pouch, false)) {
+                if (!this.loadRecipe(null, this.pouch, false)) {
                     this.pouch.clear();
                     this.update(this.getBlockState().with(InfuserBlock.LIT, false));
                 }
@@ -49,23 +57,52 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
                     this.pouch.clear();
                     this.recipe = null;
                     this.update(this.getBlockState().with(InfuserBlock.LIT, false));
+                    this.getWorld().addBlockEvent(this.getPos(), this.getBlockState().getBlock(), 1, 0);
                 }
             }
         }
+        if (this.getWorld().isRemote() && this.getBlockState().get(InfuserBlock.LIT)) {
+            if (this.colours.length > 0) {
+                for (int i = 0; i < 2; i++) {
+                    this.colour = (this.colour + 1) % this.colours.length;
+                    float r = (this.colours[this.colour] >> 16 & 255) / 255.0F;
+                    float g = (this.colours[this.colour] >> 8 & 255) / 255.0F;
+                    float b = (this.colours[this.colour] & 255) / 255.0F;
+                    this.getWorld().addParticle(ModParticleTypes.INFUSER.get(), this.getPos().getX() + 0.5D, this.getPos().getY() + 0.5D, this.getPos().getZ() + 0.5D, r, g, b);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean receiveClientEvent(int id, int type) {
+        if (id == 1) {
+            if (this.getWorld().isRemote()) {
+                this.getWorld().playSound(this.getPos().getX(), this.getPos().getY(), this.getPos().getZ(), SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.5F, 2.6F + (RANDOM.nextFloat() - RANDOM.nextFloat()) * 0.8F, false);
+                for (int i = 0; i < 12; i++) {
+                    this.getWorld().addParticle(ParticleTypes.SMOKE, this.getPos().getX() + 0.5D + 0.2D * Math.sin(i * Math.PI / 6.0D), this.getPos().getY() + 1.5D, this.getPos().getZ() + 0.5D + 0.2D * Math.cos(i * Math.PI / 6.0D), 0.0D, 0.0D, 0.0D);
+                }
+            }
+            return true;
+        }
+        return super.receiveClientEvent(id, type);
     }
 
     private boolean isActive() {
         return this.infuseTime > 0;
     }
 
-    private boolean loadRecipe(NonNullList<ItemStack> pouchIn, boolean setTime) {
+    private boolean loadRecipe(ServerPlayerEntity playerEntity, NonNullList<ItemStack> pouchIn, boolean setTime) {
         Optional<InfuserRecipe> optionalInfuserRecipe = InfuserRecipe.findMatch(this.top, pouchIn, this.getWorld());
         if (optionalInfuserRecipe.isPresent()) {
-            this.recipe = optionalInfuserRecipe.get();
-            if (this.infuseTime > this.recipe.getTime() || setTime) {
-                this.infuseTime = this.recipe.getTime();
+            if (playerEntity == null || ResearchUtils.checkResearch(playerEntity, optionalInfuserRecipe.get())) {
+                this.recipe = optionalInfuserRecipe.get();
+                if (this.infuseTime > this.recipe.getTime() || setTime) {
+                    this.infuseTime = this.recipe.getTime();
+                }
+                this.colours = this.recipe.getColours();
+                return true;
             }
-            return true;
         }
         this.infuseTime = 0;
         return false;
@@ -98,7 +135,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
             }
             else {
                 if (!stack.isEmpty() && stack.getItem() instanceof FilledPouchItem) {
-                    if (this.loadRecipe(FilledPouchItem.readContents(stack.getOrCreateTag()), true)) {
+                    if (this.loadRecipe((ServerPlayerEntity)player, FilledPouchItem.readContents(stack.getOrCreateTag()), true)) {
                         stack.shrink(1);
                         changed = true;
                         to = this.getBlockState().with(InfuserBlock.LIT, true);
@@ -142,7 +179,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     private void writeMain(CompoundNBT compound) {
         super.write(compound);
         compound.put("TopItem", this.top.write(new CompoundNBT()));
-        compound.putInt("Colour", this.colour);
+        compound.putIntArray("Colours", this.colours);
     }
 
     @Override
@@ -156,7 +193,7 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     private void readMain(CompoundNBT compound) {
         super.read(null, compound);
         this.top = ItemStack.read(compound.getCompound("TopItem"));
-        this.colour = compound.getInt("Colour");
+        this.colours = compound.getIntArray("Colours");
     }
 
     @Nonnull
@@ -176,9 +213,5 @@ public class InfuserTileEntity extends TileEntity implements ITickableTileEntity
     @Override
     public void onDataPacket(NetworkManager net, SUpdateTileEntityPacket pkt) {
         this.readMain(pkt.getNbtCompound());
-    }
-
-    public int getColour() {
-        return this.colour;
     }
 }

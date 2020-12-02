@@ -1,7 +1,7 @@
 {
     "variants": {
-        "half=lower,lit=false": { "model":  "divinature:block/infuser_lower"},
-        "half=lower,lit=true": { "model":  "divinature:block/infuser_lower"},
+        "half=lower,lit=false": { "model":  "divinature:block/infuser_lower_off"},
+        "half=lower,lit=true": { "model":  "divinature:block/infuser_lower_on"},
         "half=upper,lit=false": { "model":  "divinature:block/infuser_upper"},
         "half=upper,lit=true": { "model":  "divinature:block/infuser_upper"}
     }

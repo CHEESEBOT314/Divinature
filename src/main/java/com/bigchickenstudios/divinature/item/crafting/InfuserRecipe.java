@@ -1,5 +1,7 @@
 package com.bigchickenstudios.divinature.item.crafting;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.*;
@@ -24,14 +26,16 @@ public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements 
     private final ItemStack output;
 
     private final int time;
+    private final int[] colours;
 
-    private InfuserRecipe(ResourceLocation idIn, Ingredient inputIn, NonNullList<Ingredient> pouchIn, ResourceLocation researchIn, ItemStack outputIn, int timeIn) {
+    private InfuserRecipe(ResourceLocation idIn, Ingredient inputIn, NonNullList<Ingredient> pouchIn, ResourceLocation researchIn, ItemStack outputIn, int timeIn, int[] coloursIn) {
         super(idIn);
         this.input = inputIn;
         this.pouch = pouchIn;
         this.research = researchIn;
         this.output = outputIn;
         this.time = timeIn;
+        this.colours = coloursIn;
     }
 
     public Ingredient getInput() {
@@ -50,6 +54,10 @@ public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements 
 
     public int getTime() {
         return this.time;
+    }
+
+    public int[] getColours() {
+        return this.colours;
     }
 
     @Nonnull
@@ -112,7 +120,14 @@ public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements 
             NonNullList<Ingredient> pouch = IPouchRecipe.readPouch(JSONUtils.getJsonArray(json, "pouch"));
             ResourceLocation research = new ResourceLocation(JSONUtils.getString(json, "research"));
             ItemStack output = ShapedRecipe.deserializeItem(JSONUtils.getJsonObject(json, "output"));
-            return new InfuserRecipe(id, input, pouch, research, output, JSONUtils.getInt(json, "time"));
+            int time = JSONUtils.getInt(json, "time");
+            JsonArray coloursArray = JSONUtils.getJsonArray(json, "colours");
+            int[] colours = new int[coloursArray.size()];
+            for (int i = 0; i < coloursArray.size(); i++) {
+                colours[i] = JSONUtils.getInt(coloursArray.get(i), "colour");
+            }
+
+            return new InfuserRecipe(id, input, pouch, research, output, time, colours);
         }
 
         @Nullable
@@ -123,7 +138,11 @@ public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements 
             ResourceLocation research = buffer.readResourceLocation();
             ItemStack output = buffer.readItemStack();
             int time = buffer.readVarInt();
-            return new InfuserRecipe(id, input, pouch, research, output, time);
+            int[] colours = new int[buffer.readVarInt()];
+            for (int i = 0; i < colours.length; i++) {
+                colours[i] = buffer.readVarInt();
+            }
+            return new InfuserRecipe(id, input, pouch, research, output, time, colours);
         }
 
         @Override
@@ -133,6 +152,10 @@ public class InfuserRecipe extends AbstractRecipe<InfuserRecipe.Inv> implements 
             buffer.writeResourceLocation(recipe.research);
             buffer.writeItemStack(recipe.output);
             buffer.writeVarInt(recipe.time);
+            buffer.writeVarInt(recipe.colours.length);
+            for (int c : recipe.colours) {
+                buffer.writeVarInt(c);
+            }
         }
     }
 }
