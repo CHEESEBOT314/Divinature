@@ -1,6 +1,6 @@
 package com.bigchickenstudios.divinature.client.integration.jei;
 
-import com.bigchickenstudios.divinature.block.ModBlocks;
+import com.bigchickenstudios.divinature.world.level.block.ModBlocks;
 import com.bigchickenstudios.divinature.item.crafting.InfuserRecipe;
 import com.bigchickenstudios.divinature.item.crafting.ModRecipeTypes;
 import com.google.common.collect.ImmutableList;

@@ -1,6 +1,6 @@
-package com.bigchickenstudios.divinature.tileentity;
+package com.bigchickenstudios.divinature.world.level.block.entity;
 
-import com.bigchickenstudios.divinature.block.MortarBlock;
+import com.bigchickenstudios.divinature.world.level.block.MortarBlock;
 import com.bigchickenstudios.divinature.item.FilledPouchItem;
 import com.bigchickenstudios.divinature.item.ModItems;
 import com.bigchickenstudios.divinature.item.crafting.IPouchRecipe;
@@ -14,7 +14,6 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.play.server.SUpdateTileEntityPacket;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
 import net.minecraftforge.common.util.Constants;
 
 import javax.annotation.Nonnull;

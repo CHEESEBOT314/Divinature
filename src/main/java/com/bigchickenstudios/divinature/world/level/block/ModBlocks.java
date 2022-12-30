@@ -1,4 +1,4 @@
-package com.bigchickenstudios.divinature.block;
+package com.bigchickenstudios.divinature.world.level.block;
 
 import com.bigchickenstudios.divinature.Strings;
 import net.minecraft.block.*;

@@ -1,4 +1,4 @@
-package com.bigchickenstudios.divinature.tileentity;
+package com.bigchickenstudios.divinature.world.level.block.entity;
 
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.state.properties.DoubleBlockHalf;

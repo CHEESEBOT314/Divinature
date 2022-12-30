@@ -1,6 +1,6 @@
-package com.bigchickenstudios.divinature.block;
+package com.bigchickenstudios.divinature.world.level.block;
 
-import com.bigchickenstudios.divinature.tileentity.MortarTileEntity;
+import com.bigchickenstudios.divinature.world.level.block.entity.MortarTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

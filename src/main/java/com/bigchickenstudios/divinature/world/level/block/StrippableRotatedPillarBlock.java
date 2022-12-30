@@ -1,4 +1,4 @@
-package com.bigchickenstudios.divinature.block;
+package com.bigchickenstudios.divinature.world.level.block;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.RotatedPillarBlock;

@@ -1,7 +1,7 @@
 package com.bigchickenstudios.divinature.client.renderer.overlay;
 
 import com.bigchickenstudios.divinature.Strings;
-import com.bigchickenstudios.divinature.tileentity.MortarTileEntity;
+import com.bigchickenstudios.divinature.world.level.block.entity.MortarTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.AbstractGui;

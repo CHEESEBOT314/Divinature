@@ -1,7 +1,7 @@
-package com.bigchickenstudios.divinature.tileentity;
+package com.bigchickenstudios.divinature.world.level.block.entity;
 
 import com.bigchickenstudios.divinature.Strings;
-import com.bigchickenstudios.divinature.block.ModBlocks;
+import com.bigchickenstudios.divinature.world.level.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityType;

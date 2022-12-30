@@ -1,6 +1,6 @@
-package com.bigchickenstudios.divinature.block;
+package com.bigchickenstudios.divinature.world.level.block;
 
-import com.bigchickenstudios.divinature.tileentity.BrazierTileEntity;
+import com.bigchickenstudios.divinature.world.level.block.entity.InfuserTileEntity;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
@@ -9,15 +9,13 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.BlockItemUseContext;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.BooleanProperty;
 import net.minecraft.state.EnumProperty;
 import net.minecraft.state.StateContainer;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.Direction;
-import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.shapes.ISelectionContext;
@@ -29,19 +27,20 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
 
-public class BrazierBlock extends Block {
+public class InfuserBlock extends Block {
 
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
 
-    private static final VoxelShape LOWER = VoxelShapes.or(Block.makeCuboidShape(5.0D, 0.0D, 5.0D, 11.0D, 15.0D, 11.0D),
-                                                            Block.makeCuboidShape(4.0D, 15.0D, 4.0D, 12.0D, 16.0D, 12.0D));
-    private static final VoxelShape UPPER = Block.makeCuboidShape(3.0D, 0.0D, 3.0D, 13.0D, 4.0D, 13.0D);
+    private static final VoxelShape LOWER = VoxelShapes.or(Block.makeCuboidShape(0.0D, 0.0D, 0.0D, 16.0D, 1.0D, 16.0D),
+                                                            Block.makeCuboidShape(1.0D, 1.0D, 1.0D, 15.0D, 16.0D, 15.0D));
+    private static final VoxelShape UPPER = Block.makeCuboidShape(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D);
 
-    public BrazierBlock(Block.Properties properties) {
+    public InfuserBlock(Properties properties) {
         super(properties);
-        this.setDefaultState(this.getStateContainer().getBaseState().with(HALF, DoubleBlockHalf.LOWER).with(LIT, false));
+        this.setDefaultState(this.getStateContainer().getBaseState().with(LIT, false).with(HALF, DoubleBlockHalf.LOWER));
     }
 
     @Nonnull
@@ -54,8 +53,36 @@ public class BrazierBlock extends Block {
     }
 
     @Override
+    public void animateTick(BlockState state, World world, BlockPos pos, Random rand) {
+        if (state.get(HALF) == DoubleBlockHalf.LOWER) {
+            if (rand.nextInt(2) == 0) {
+                for(int i = 0; i < rand.nextInt(1) + 1; ++i) {
+                    world.addParticle(ParticleTypes.SMOKE, (double)pos.getX() + rand.nextDouble(), (double)pos.getY() + rand.nextDouble(), (double)pos.getZ() + rand.nextDouble(), 0.0D, 0.0D, 0.0D);
+                }
+            }
+            if (state.get(LIT)) {
+                if (rand.nextInt(2) == 0) {
+                    world.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_FIRE_AMBIENT, SoundCategory.BLOCKS, 1.0F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.3F, false);
+                }
+            }
+            else {
+                if (rand.nextInt(10) == 0) {
+                    world.playSound((double)pos.getX() + 0.5D, (double)pos.getY() + 0.5D, (double)pos.getZ() + 0.5D, SoundEvents.BLOCK_CAMPFIRE_CRACKLE, SoundCategory.BLOCKS, 0.5F + rand.nextFloat(), rand.nextFloat() * 0.7F + 0.6F, false);
+                }
+            }
+        }
+    }
+
+    @Override
+    public boolean eventReceived(BlockState state, World world, BlockPos pos, int id, int param) {
+        super.eventReceived(state, world, pos, id, param);
+        TileEntity tileEntity = world.getTileEntity(pos);
+        return tileEntity != null && tileEntity.receiveClientEvent(id, param);
+    }
+
+    @Override
     protected void fillStateContainer(StateContainer.Builder<Block, BlockState> builder) {
-        builder.add(HALF, LIT);
+        builder.add(LIT, HALF);
     }
 
     @Nonnull
@@ -109,8 +136,8 @@ public class BrazierBlock extends Block {
     public ActionResultType onBlockActivated(BlockState state, World world, BlockPos pos, PlayerEntity player, Hand hand, BlockRayTraceResult rayTraceResult) {
         DoubleBlockHalf half = state.get(HALF);
         TileEntity tileEntity = world.getTileEntity(pos.offset(Direction.DOWN, half == DoubleBlockHalf.UPPER ? 1 : 0));
-        if (tileEntity instanceof BrazierTileEntity) {
-            return ((BrazierTileEntity)tileEntity).processInteract(player, hand, half);
+        if (tileEntity instanceof InfuserTileEntity) {
+            return ((InfuserTileEntity)tileEntity).processInteract(player, hand, half);
         }
         return ActionResultType.PASS;
     }
@@ -123,17 +150,17 @@ public class BrazierBlock extends Block {
 
     @Override
     public int getLightValue(BlockState state, IBlockReader world, BlockPos pos) {
-        return 15;
+        return state.get(LIT) ? 15 : 12;
     }
 
     @Override
     public boolean hasTileEntity(BlockState state) {
-        return state.get(HALF) == DoubleBlockHalf.UPPER;
+        return state.get(HALF) == DoubleBlockHalf.LOWER;
     }
 
     @Nullable
     @Override
     public TileEntity createTileEntity(BlockState state, IBlockReader world) {
-        return new BrazierTileEntity();
+        return new InfuserTileEntity();
     }
 }

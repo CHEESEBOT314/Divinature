@@ -1,6 +1,6 @@
 package com.bigchickenstudios.divinature.event;
 
-import com.bigchickenstudios.divinature.block.IStrippable;
+import com.bigchickenstudios.divinature.world.level.block.IStrippable;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;

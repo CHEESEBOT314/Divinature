@@ -1,7 +1,7 @@
 package com.bigchickenstudios.divinature.client.renderer.tileentity;
 
 import com.bigchickenstudios.divinature.Strings;
-import com.bigchickenstudios.divinature.tileentity.MortarTileEntity;
+import com.bigchickenstudios.divinature.world.level.block.entity.MortarTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.IRenderTypeBuffer;

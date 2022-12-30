@@ -1,6 +1,6 @@
 package com.bigchickenstudios.divinature.client;
 
-import com.bigchickenstudios.divinature.block.ModBlocks;
+import com.bigchickenstudios.divinature.world.level.block.ModBlocks;
 import com.bigchickenstudios.divinature.client.multiplayer.ClientResearchManager;
 import com.bigchickenstudios.divinature.client.particle.InfuserParticle;
 import com.bigchickenstudios.divinature.client.renderer.overlay.MortarOverlayRenderer;
@@ -8,7 +8,7 @@ import com.bigchickenstudios.divinature.client.renderer.overlay.OverlayRenderer;
 import com.bigchickenstudios.divinature.client.renderer.tileentity.InfuserTileEntityRenderer;
 import com.bigchickenstudios.divinature.client.renderer.tileentity.MortarTileEntityRenderer;
 import com.bigchickenstudios.divinature.particle.ModParticleTypes;
-import com.bigchickenstudios.divinature.tileentity.ModTileEntityTypes;
+import com.bigchickenstudios.divinature.world.level.block.entity.ModTileEntityTypes;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;

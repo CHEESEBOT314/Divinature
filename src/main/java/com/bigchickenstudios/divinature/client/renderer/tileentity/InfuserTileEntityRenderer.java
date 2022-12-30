@@ -1,6 +1,6 @@
 package com.bigchickenstudios.divinature.client.renderer.tileentity;
 
-import com.bigchickenstudios.divinature.tileentity.InfuserTileEntity;
+import com.bigchickenstudios.divinature.world.level.block.entity.InfuserTileEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;

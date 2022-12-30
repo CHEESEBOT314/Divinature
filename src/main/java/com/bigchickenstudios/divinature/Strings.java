@@ -1,7 +1,5 @@
 package com.bigchickenstudios.divinature;
 
-import net.minecraft.util.ResourceLocation;
-
 public final class Strings {
 
     public static final String MODID = "divinature";

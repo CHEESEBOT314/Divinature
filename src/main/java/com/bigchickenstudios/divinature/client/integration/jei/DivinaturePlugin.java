@@ -1,7 +1,7 @@
 package com.bigchickenstudios.divinature.client.integration.jei;
 
 import com.bigchickenstudios.divinature.Strings;
-import com.bigchickenstudios.divinature.block.ModBlocks;
+import com.bigchickenstudios.divinature.world.level.block.ModBlocks;
 import com.bigchickenstudios.divinature.event.research.ResearchCompletedEvent;
 import com.google.common.collect.Sets;
 import mezz.jei.api.IModPlugin;

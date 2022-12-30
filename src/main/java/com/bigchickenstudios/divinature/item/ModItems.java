@@ -1,7 +1,7 @@
 package com.bigchickenstudios.divinature.item;
 
 import com.bigchickenstudios.divinature.Strings;
-import com.bigchickenstudios.divinature.block.ModBlocks;
+import com.bigchickenstudios.divinature.world.level.block.ModBlocks;
 import net.minecraft.block.Block;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.*;

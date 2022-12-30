@@ -1,11 +1,9 @@
-package com.bigchickenstudios.divinature.tileentity;
+package com.bigchickenstudios.divinature.world.level.block.entity;
 
-import com.bigchickenstudios.divinature.block.InfuserBlock;
+import com.bigchickenstudios.divinature.world.level.block.InfuserBlock;
 import com.bigchickenstudios.divinature.item.FilledPouchItem;
 import com.bigchickenstudios.divinature.item.crafting.InfuserRecipe;
 import com.bigchickenstudios.divinature.particle.ModParticleTypes;
-import com.bigchickenstudios.divinature.research.PlayerResearch;
-import com.bigchickenstudios.divinature.research.ResearchManager;
 import com.bigchickenstudios.divinature.research.ResearchUtils;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
@@ -18,7 +16,6 @@ import net.minecraft.particles.ParticleTypes;
 import net.minecraft.state.properties.DoubleBlockHalf;
 import net.minecraft.tileentity.ITickableTileEntity;
 import net.minecraft.tileentity.TileEntity;
-import net.minecraft.util.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
